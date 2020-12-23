@@ -37,4 +37,9 @@ public class AppConfig {
     public Encrypt getEncrypt() {
         return new Encrypt();
     }
+
+    @Bean
+    public UserToken getUserToken() {
+        return new UserToken();
+    }
 }

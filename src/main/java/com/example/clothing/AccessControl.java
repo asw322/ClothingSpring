@@ -13,6 +13,9 @@ public class AccessControl {
     @Autowired 
     private Input INPUT;
 
+    @Autowired 
+    private UserToken USERTOKEN;
+
     private int INVALID_LOGIN_ATTEMPTS;
     private int MAX_INVALID_LOGIN_ALLOWED;
 
@@ -22,7 +25,7 @@ public class AccessControl {
 
     private String NAME;
     private String BIRTHDATE;
-    private int SEX;
+    private String SEX;
     private String ID;
 
     public AccessControl() {
@@ -106,10 +109,14 @@ public class AccessControl {
         System.out.println("Account created..");
         System.out.println("Let's begin by inputting your basic information");
         
-        while (true) {
+        NAME = this.getRobustInput("Enter your name: ");
+        BIRTHDATE = this.getRobustInput("Enter your birthdate (YYYY-MM-DD): ");
+        SEX = this.getRobustInput("Enter your gender: \n1. Male\n2. Female\nEnter: ");
 
-        }
+        // Create a user token 
+        USERTOKEN.setAll(USERNAME, HASHEDPASSWORD, NAME, BIRTHDATE, SEX, ID);
 
+        // We can store this USERTOKEN into the DB 
     }
 
     /**
