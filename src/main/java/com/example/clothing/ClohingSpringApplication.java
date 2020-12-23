@@ -13,11 +13,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 @SpringBootApplication
 public class ClohingSpringApplication {
 
-	// Private data fields
-	@Autowired
-	private static Input INPUT;
+	// Private data fields	
 	private static ApplicationContext CONTEXT = new AnnotationConfigApplicationContext(AppConfig.class);
 	private static ClientInterface CLIENT;
+
+	@Autowired
+	private static Input INPUT;
 
 	public static void main(String[] args) {
 		// Uncomment later!
@@ -49,12 +50,17 @@ public class ClohingSpringApplication {
 			}
 		}
 		
-
-		// System.out.println("You entered = " + action);
+		CLIENT = CONTEXT.getBean(ClientInterface.class);
 
 		if(action.equals("1")) {
-			CLIENT = CONTEXT.getBean(ClientInterface.class);
-			CLIENT.test();
+			CLIENT.login();
+		}
+		else if(action.equals("2")) {
+			CLIENT.createAccount();
+		}
+		else {
+			System.out.println("Invalid option");
+			System.exit(0);
 		}
 
 	}

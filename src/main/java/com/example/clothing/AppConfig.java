@@ -27,4 +27,14 @@ public class AppConfig {
     public ClientInterface getClientInterface() {
         return new ClientInterface(); 
     }
+
+    @Bean
+    public AccessControl getAccessControl() {
+        return new AccessControl();
+    }
+
+    @Bean
+    public Encrypt getEncrypt() {
+        return new Encrypt();
+    }
 }
