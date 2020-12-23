@@ -11,17 +11,31 @@ public class ClientInterface {
     @Autowired
     private AccessControl CONTROL;
 
+    @Autowired
+    private UserToken USERTOKEN;
+
     public ClientInterface() {
         System.out.println("Client Interface Instance Created");
-    }
-    public void test() {
-        System.out.println("this is a test");
-    }   
+    }  
 
+    /**
+     * Login through AccessControl
+     */
     public void login() {
-        CONTROL.login();
+        USERTOKEN = CONTROL.login();
     }
+
+    /**
+     * Create a new account through AccessControl
+     */
     public void createAccount() {
-        CONTROL.createAccount();
+        USERTOKEN = CONTROL.createAccount();
+    }
+
+    /**
+     * Show the user's portfolio
+     */
+    public void showPortfolio() {
+
     }
 }

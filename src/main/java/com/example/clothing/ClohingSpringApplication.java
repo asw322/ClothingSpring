@@ -58,11 +58,9 @@ public class ClohingSpringApplication {
 		else if(action.equals("2")) {
 			CLIENT.createAccount();
 		}
-		else {
-			System.out.println("Invalid option");
-			System.exit(0);
-		}
-
+		
+		System.out.println("My Portfolio");
+		CLIENT.showPortfolio();
 	}
 
 }

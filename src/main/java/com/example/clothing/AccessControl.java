@@ -34,7 +34,7 @@ public class AccessControl {
     }
 
     // LOGIN
-    public void login() {
+    public UserToken login() {
         if(INVALID_LOGIN_ATTEMPTS == MAX_INVALID_LOGIN_ALLOWED) {
             System.out.println("Max attempts reached");
             System.exit(1);
@@ -67,12 +67,14 @@ public class AccessControl {
             login();
         }
 
-        System.out.println("finishes");
         // MAKES THE DATABASE CALLS TO SEE IF IT MATCHES 
+
+
+        return USERTOKEN;
     }
 
     // CREATING NEW ACCOUNT
-    public void createAccount() {
+    public UserToken createAccount() {
         System.out.println("Creating New Account");
 
         // Getting Username
@@ -117,8 +119,19 @@ public class AccessControl {
         this.createUserToken(USERNAME, HASHEDPASSWORD, NAME, BIRTHDATE, SEX, ID);
         
         // We can store this USERTOKEN into the DB 
+
+        return USERTOKEN;
     }
 
+    /**
+     * 
+     * @param _USERNAME
+     * @param _HASHEDPASSWORD
+     * @param _NAME
+     * @param _BIRTHDATE
+     * @param _SEX
+     * @param _ID
+     */
     private void createUserToken(String _USERNAME, String _HASHEDPASSWORD, String _NAME, String _BIRTHDATE, String _SEX, String _ID) {
         // Handle SEX parameter
         // Handle BIRTHDATE parameter
