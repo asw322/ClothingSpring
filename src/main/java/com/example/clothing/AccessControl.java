@@ -1,18 +1,17 @@
 package com.example.clothing;
 
-import java.util.Scanner;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AccessControl {
     // Private data fields
-    @Autowired
-    private Scanner CONSOLE;
 
     @Autowired
     private Encrypt ENCRYPT;
+
+    @Autowired 
+    private Input INPUT;
 
     private int INVALID_LOGIN_ATTEMPTS;
     private int MAX_INVALID_LOGIN_ALLOWED;
@@ -20,6 +19,11 @@ public class AccessControl {
     private String USERNAME;
     private String PASSWORD;
     private String HASHEDPASSWORD;
+
+    private String NAME;
+    private String BIRTHDATE;
+    private int SEX;
+    private String ID;
 
     public AccessControl() {
         INVALID_LOGIN_ATTEMPTS = 0;
@@ -40,22 +44,10 @@ public class AccessControl {
         System.out.println("Sign in");
 
         // Getting Username
-        while(true) {
-            System.out.print("Email or Username: ");
-            USERNAME = CONSOLE.nextLine();
-            if(USERNAME.length() > 0) {
-                break;
-            }
-        }
+        USERNAME = this.getRobustInput("Email or Username: ");
 
         // Getting password
-        while(true) {
-            System.out.print("Password: ");
-            PASSWORD = CONSOLE.nextLine();
-            if(PASSWORD.length() > 0) {
-                break;
-            }
-        }
+        PASSWORD = this.getRobustInput("Password: ");
         System.out.println("Input password = " + PASSWORD);
 
         // Hash the password
@@ -78,6 +70,61 @@ public class AccessControl {
 
     // CREATING NEW ACCOUNT
     public void createAccount() {
-        System.out.println("creating new account");
+        System.out.println("Creating New Account");
+
+        // Getting Username
+        USERNAME = this.getRobustInput("Email or Username: ");
+
+        // Getting password
+        PASSWORD = this.getRobustInput("Password: ");
+        System.out.println("Input password = " + PASSWORD);
+
+        // Confirming password
+        while(true) {
+            String PASSWORD2 = INPUT.getString("Re-enter Password: ");
+            if(PASSWORD.equals(PASSWORD2)) {
+                break;
+            }
+            else {
+                System.out.println("Passwords do not match");
+                createAccount();
+            }
+        }
+
+        // Hash password
+        HASHEDPASSWORD = ENCRYPT.getHash(PASSWORD);
+        System.out.println("Output hash = " + HASHEDPASSWORD);
+
+        // Remove password
+        PASSWORD = ""; 
+
+        // Create a User account
+        System.out.println("Creating your account..");
+        System.out.println("Generating Unique ID: ");
+        
+
+        System.out.println("Account created..");
+        System.out.println("Let's begin by inputting your basic information");
+        
+        while (true) {
+
+        }
+
+    }
+
+    /**
+     * Handles Robust Inputs
+     * @param str
+     * @return
+     */
+    public String getRobustInput(String str) {
+        String temp;
+        while(true) {
+            temp = INPUT.getString(str);
+            if(temp.length() > 0) {
+                break;
+            }
+        }
+        return temp; 
     }
 }

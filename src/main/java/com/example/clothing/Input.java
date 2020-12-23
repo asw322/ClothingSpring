@@ -24,4 +24,9 @@ public class Input {
         System.out.println("Enter a string");
         return CONSOLE.nextLine();
     }
+    
+    public String getString(String str) {
+        System.out.print(str);
+        return CONSOLE.nextLine();
+    }
 }
