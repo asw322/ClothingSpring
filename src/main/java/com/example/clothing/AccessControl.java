@@ -114,17 +114,56 @@ public class AccessControl {
         SEX = this.getRobustInput("Enter your gender: \n1. Male\n2. Female\nEnter: ");
 
         // Create a user token 
-        USERTOKEN.setAll(USERNAME, HASHEDPASSWORD, NAME, BIRTHDATE, SEX, ID);
-
+        this.createUserToken(USERNAME, HASHEDPASSWORD, NAME, BIRTHDATE, SEX, ID);
+        
         // We can store this USERTOKEN into the DB 
     }
+
+    private void createUserToken(String _USERNAME, String _HASHEDPASSWORD, String _NAME, String _BIRTHDATE, String _SEX, String _ID) {
+        // Handle SEX parameter
+        // Handle BIRTHDATE parameter
+        String preprocessed_sex = this.checkSex(_SEX);
+        String preprocessed_birthdate = this.checkBirthdate(_BIRTHDATE);
+        USERTOKEN.setAll(_USERNAME, _HASHEDPASSWORD, _NAME, preprocessed_birthdate, preprocessed_sex, _ID);
+    }
+
+    /**
+     * 
+     * @param _BIRTHDATE
+     * @return
+     */
+    private String checkBirthdate(String _BIRTHDATE) {
+        // Need to implement this later
+        // Check if the input is in the form YYYY-MM-DD
+        // If not, transform _BIRTHDATE into that form
+        // Return errors if appropriate 
+        return null;
+    }
+
+    /**
+     * 
+     * @param _SEX
+     * @return
+     */
+    private String checkSex(String _SEX) {
+        if(SEX.equals("1") || SEX.toLowerCase().equals("male")) {
+            return "1";
+        }
+        else if(SEX.equals("2") || SEX.toLowerCase().equals("female")) {
+            return "2";
+        }
+        else {
+            return null;
+        }
+    }
+
 
     /**
      * Handles Robust Inputs
      * @param str
      * @return
      */
-    public String getRobustInput(String str) {
+    private String getRobustInput(String str) {
         String temp;
         while(true) {
             temp = INPUT.getString(str);
