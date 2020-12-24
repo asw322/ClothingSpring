@@ -9,6 +9,10 @@ import java.security.NoSuchAlgorithmException;
 
 @Component
 public class Encrypt {
+    public Encrypt() {
+        
+    }
+
     public String getHash(String _password) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

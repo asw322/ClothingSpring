@@ -28,4 +28,10 @@ public class UserToken {
         SEX = _SEX;
         ID = _ID;
     }
+
+    public void setLogin(String _USERNAME, String _HASHEDPASSWORD, String _ID) {
+        USERNAME = _USERNAME;
+        HASHEDPASSWORD = _HASHEDPASSWORD;
+        ID = _ID;
+    }
 }

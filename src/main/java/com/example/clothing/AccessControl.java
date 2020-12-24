@@ -1,11 +1,26 @@
 package com.example.clothing;
 
+
+import java.beans.Statement;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+
+import java.util.*;
+
+import org.flywaydb.core.internal.database.base.Connection;
+import org.flywaydb.core.internal.jdbc.JdbcTemplate;
+// import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AccessControl {
     // Private data fields
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     private Encrypt ENCRYPT;
@@ -28,9 +43,18 @@ public class AccessControl {
     private String SEX;
     private String ID;
 
+    @Autowired
     public AccessControl() {
         INVALID_LOGIN_ATTEMPTS = 0;
         MAX_INVALID_LOGIN_ALLOWED = 5;
+
+        // Establish connection with JDBC 
+        try {
+
+            jdbcTemplate = new JdbcTemplate(DriverManager.getConnection("jdbc:postgresql://localhost:5432/demodb"));
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // LOGIN
@@ -67,10 +91,16 @@ public class AccessControl {
             login();
         }
 
-        // MAKES THE DATABASE CALLS TO SEE IF IT MATCHES 
+        // final String sql = "SELECT * FROM person";
+        // // MAKES THE DATABASE CALLS TO SEE IF IT MATCHES 
+        // jdbcTemplate.query(sql, (resultSet, i) -> {
+        //     UserToken user = new UserToken();
+        //     user.setAll(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("hashedpassword"));
+        //     return user; 
+        // });
 
 
-        return USERTOKEN;
+        return null;
     }
 
     // CREATING NEW ACCOUNT
@@ -185,5 +215,20 @@ public class AccessControl {
             }
         }
         return temp; 
+    }
+
+
+
+    // TEST METHOD
+    public List<UserToken> selectAllPeople() {
+        final String sql = "select * from person";
+        return jdbcTemplate.query(sql, new RowMapper<UserToken>() {
+            @Override
+            public UserToken mapRow(ResultSet rs, int rownumber) throws SQLException {
+                UserToken u = new UserToken();
+                // u.setLogin()
+                return u;
+            }
+        });
     }
 }
