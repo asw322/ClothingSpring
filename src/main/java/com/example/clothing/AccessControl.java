@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 
 import java.util.*;
 
+import com.example.clothing.DAO.UserDataAccessService;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.core.RowMapper;
@@ -34,7 +36,7 @@ public class AccessControl {
     private UserToken USERTOKEN;
 
     @Autowired 
-    private DataAccessService DATA_ACCESS_SERVICE;
+    private UserDataAccessService USER_DATA_ACCESS_SERVICE;
 
     private int INVALID_LOGIN_ATTEMPTS;
     private int MAX_INVALID_LOGIN_ALLOWED;
@@ -91,8 +93,13 @@ public class AccessControl {
         // List<UserToken> elem = DATA_ACCESS_SERVICE.getAllPeople();
 
 
-        String sql = "SELECT * FROM person WHERE username = " + USERNAME + " AND hashedpassword = " + HASHEDPASSWORD;
-        List<UserToken> res = DATA_ACCESS_SERVICE.executeUserTokenQuery(sql);
+        String sql = "SELECT * FROM person";
+        // String sql = "SELECT * FROM person WHERE username = " + USERNAME + " AND hashedpassword = " + HASHEDPASSWORD;
+        List<UserToken> res = USER_DATA_ACCESS_SERVICE.executeUserTokenQuery(sql);
+
+        for(int i = 0; i < res.size(); i++) {
+            res.get(i).printUserToken();
+        }
 
         // Check if result is correct
         if(res.size() == 1) {

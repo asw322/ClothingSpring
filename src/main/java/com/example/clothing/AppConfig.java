@@ -9,6 +9,8 @@ package com.example.clothing;
 
 import java.util.*;
 
+import com.example.clothing.DAO.UserDataAccessService;
+
 
 import org.flywaydb.core.internal.jdbc.JdbcTemplate;
 import org.springframework.context.annotation.Bean;
@@ -57,8 +59,8 @@ public class AppConfig {
 
     @Bean
     @Primary
-    public DataAccessService getDataAccessService() {
-        return new DataAccessService();
+    public UserDataAccessService getDataAccessService() {
+        return new UserDataAccessService();
     }
 
     // @Bean
