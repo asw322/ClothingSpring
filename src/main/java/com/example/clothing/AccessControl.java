@@ -7,23 +7,15 @@ import java.sql.ResultSet;
 
 import java.util.*;
 
-// import javax.sql.DataSource;
-
-import org.flywaydb.core.internal.database.base.Connection;
-// import org.flywaydb.core.internal.jdbc.JdbcTemplate;
-
-
-// import java.sql.Connection;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
 
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
 
 @Component
 public class AccessControl {
@@ -41,6 +33,9 @@ public class AccessControl {
     @Autowired 
     private UserToken USERTOKEN;
 
+    @Autowired 
+    private DataAccessService DATA_ACCESS_SERVICE;
+
     private int INVALID_LOGIN_ATTEMPTS;
     private int MAX_INVALID_LOGIN_ALLOWED;
 
@@ -57,23 +52,6 @@ public class AccessControl {
     public AccessControl() {
         INVALID_LOGIN_ATTEMPTS = 0;
         MAX_INVALID_LOGIN_ALLOWED = 5;
-
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver"); // May need to change 
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/demodb");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("password");
-        
-
-        // Establish connection with JDBC 
-        // try {
-            // DataSource dataSource = new DataSource();
-            // jdbcTemplate = new JdbcTemplate(dataSource);
-        jdbcTemplate = new JdbcTemplate(dataSource);
-            // jdbcTemplate = new JdbcTemplate(DriverManager.getConnection("jdbc:postgresql://localhost:5432/demodb"));
-        // } catch(SQLException e) {
-            // e.printStackTrace();
-        // }
     }
 
     // LOGIN
@@ -110,7 +88,7 @@ public class AccessControl {
             login();
         }
 
-        List<UserToken> elem = getAllPeople();
+        List<UserToken> elem = DATA_ACCESS_SERVICE.getAllPeople();
 
         for(int i = 0; i < elem.size(); i++) {
             elem.get(i).printUserToken();

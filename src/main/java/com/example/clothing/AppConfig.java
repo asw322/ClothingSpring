@@ -55,6 +55,26 @@ public class AppConfig {
         return new UserToken();
     }
 
+    @Bean
+    @Primary
+    public DataAccessService getDataAccessService() {
+        return new DataAccessService();
+    }
+
+    // @Bean
+    // @Primary
+    // public DriverManagerDataSource getDriverManagerDataSource() {
+    //     DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
+    //     // Set connection properties
+    //     dataSource.setDriverClassName("org.postgresql.Driver"); 
+    //     dataSource.setUrl("jdbc:postgresql://localhost:5432/demodb");
+    //     dataSource.setUsername("postgres");
+    //     dataSource.setPassword("password");
+
+    //     return dataSource;
+    // }
+
     // @Bean
     // @Primary
     // public JdbcTemplate getJdbcTemplate() {
