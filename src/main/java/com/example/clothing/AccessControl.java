@@ -1,6 +1,5 @@
 package com.example.clothing;
 
-
 import java.beans.Statement;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,18 +7,29 @@ import java.sql.ResultSet;
 
 import java.util.*;
 
+// import javax.sql.DataSource;
+
 import org.flywaydb.core.internal.database.base.Connection;
-import org.flywaydb.core.internal.jdbc.JdbcTemplate;
-// import org.springframework.jdbc.core.JdbcTemplate;
+// import org.flywaydb.core.internal.jdbc.JdbcTemplate;
+
+
+// import java.sql.Connection;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+
+
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Component
 public class AccessControl {
     // Private data fields
 
-    @Autowired
+    // @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -48,13 +58,22 @@ public class AccessControl {
         INVALID_LOGIN_ATTEMPTS = 0;
         MAX_INVALID_LOGIN_ALLOWED = 5;
 
-        // Establish connection with JDBC 
-        try {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("org.postgresql.Driver"); // May need to change 
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/demodb");
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("password");
+        
 
-            jdbcTemplate = new JdbcTemplate(DriverManager.getConnection("jdbc:postgresql://localhost:5432/demodb"));
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
+        // Establish connection with JDBC 
+        // try {
+            // DataSource dataSource = new DataSource();
+            // jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate = new JdbcTemplate(dataSource);
+            // jdbcTemplate = new JdbcTemplate(DriverManager.getConnection("jdbc:postgresql://localhost:5432/demodb"));
+        // } catch(SQLException e) {
+            // e.printStackTrace();
+        // }
     }
 
     // LOGIN
@@ -91,14 +110,11 @@ public class AccessControl {
             login();
         }
 
-        // final String sql = "SELECT * FROM person";
-        // // MAKES THE DATABASE CALLS TO SEE IF IT MATCHES 
-        // jdbcTemplate.query(sql, (resultSet, i) -> {
-        //     UserToken user = new UserToken();
-        //     user.setAll(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("hashedpassword"));
-        //     return user; 
-        // });
+        List<UserToken> elem = getAllPeople();
 
+        for(int i = 0; i < elem.size(); i++) {
+            elem.get(i).printUserToken();
+        }
 
         return null;
     }
@@ -217,17 +233,16 @@ public class AccessControl {
         return temp; 
     }
 
+    public List<UserToken> getAllPeople() {
+        System.out.println("Grabbing all users!");
+        return jdbcTemplate.query("SELECT * FROM person", new RowMapper<UserToken>() {
 
-
-    // TEST METHOD
-    public List<UserToken> selectAllPeople() {
-        final String sql = "select * from person";
-        return jdbcTemplate.query(sql, new RowMapper<UserToken>() {
             @Override
-            public UserToken mapRow(ResultSet rs, int rownumber) throws SQLException {
-                UserToken u = new UserToken();
-                // u.setLogin()
-                return u;
+            public UserToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                System.out.println("Setting up new user!");
+                UserToken temp = new UserToken();
+                temp.setLogin(rs.getString("name"), rs.getString("hashedpassword"), rs.getString("id"));
+                return temp;
             }
         });
     }

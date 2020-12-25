@@ -34,4 +34,12 @@ public class UserToken {
         HASHEDPASSWORD = _HASHEDPASSWORD;
         ID = _ID;
     }
+
+    public void printUserToken() {
+        System.out.println("\nPrinting User Token: ");
+        System.out.println("Username: " + USERNAME);
+        System.out.println("Hased Password: " + HASHEDPASSWORD);
+        System.out.println("ID: " + ID);
+    }
+
 }

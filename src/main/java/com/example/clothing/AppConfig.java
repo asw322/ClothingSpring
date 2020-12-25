@@ -4,14 +4,18 @@
  * and does not recreate an new instance whenever a ContextApplication.getBean() call is made
  */
 
+
 package com.example.clothing;
 
 import java.util.*;
+
 
 import org.flywaydb.core.internal.jdbc.JdbcTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+// import org.springframework.jdbc.datasource.*;
 
 @Configuration
 public class AppConfig {
@@ -30,7 +34,7 @@ public class AppConfig {
     @Bean
     @Primary
     public ClientInterface getClientInterface() {
-        return new ClientInterface(); 
+        return new ClientInterface();
     }
 
     @Bean
@@ -51,9 +55,9 @@ public class AppConfig {
         return new UserToken();
     }
 
-    @Bean
-    @Primary
-    public JdbcTemplate getJdbcTemplate() {
-        return new JdbcTemplate(null);
-    }
+    // @Bean
+    // @Primary
+    // public JdbcTemplate getJdbcTemplate() {
+    //     return new JdbcTemplate(null);
+    // }
 }
