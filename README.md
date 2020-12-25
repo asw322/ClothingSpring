@@ -42,3 +42,18 @@ Trello Board: https://trello.com/b/4G4Upgg2
 # Ideas
 1. Balances out the wear numbers (trying to prioritize a even wear and tear)
 2. Figure out which colors go well together (based on a color, there are websites for that)
+
+
+# How to connect to demodb and see all tables
+
+<!-- Check which docker containers are open -->
+<!-- May need to start postgres docker container if closed -->
+> docker ps
+> docker exec -it <container_id> bin/bash 
+
+<!-- Connect with postgres through docker -->
+> psql -U postgres
+
+<!-- Enter the demodb database -->
+> \c demodb 
+> \dt
