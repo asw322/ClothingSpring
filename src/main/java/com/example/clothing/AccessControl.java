@@ -88,12 +88,25 @@ public class AccessControl {
             login();
         }
 
-        List<UserToken> elem = DATA_ACCESS_SERVICE.getAllPeople();
+        // List<UserToken> elem = DATA_ACCESS_SERVICE.getAllPeople();
 
-        for(int i = 0; i < elem.size(); i++) {
-            elem.get(i).printUserToken();
+
+        String sql = "SELECT * FROM person WHERE username = " + USERNAME + " AND hashedpassword = " + HASHEDPASSWORD;
+        List<UserToken> res = DATA_ACCESS_SERVICE.executeUserTokenQuery(sql);
+
+        // Check if result is correct
+        if(res.size() == 1) {
+            // Login success
+            System.out.println("Login success");
+            return res.get(0);
+        }
+        else {
+            // Login failed
+            INVALID_LOGIN_ATTEMPTS++;
+            login();
         }
 
+        // Default return
         return null;
     }
 

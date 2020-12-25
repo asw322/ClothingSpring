@@ -1,5 +1,5 @@
 /**
- * Basic API backend class
+ * Basic API backend class or also called the Data Access Object (DAO)
  * Has basic getter and setter functions to the Postgres database
  */
 
@@ -34,7 +34,7 @@ public class DataAccessService {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    
+
     public List<UserToken> getAllPeople() {
         System.out.println("Grabbing all users!");
         final String sql = "SELECT * FROM person";
@@ -43,6 +43,19 @@ public class DataAccessService {
             @Override
             public UserToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
                 System.out.println("Setting up new user!");
+                UserToken temp = new UserToken();
+                temp.setLogin(rs.getString("name"), rs.getString("hashedpassword"), rs.getString("id"));
+                return temp;
+            }
+        });
+    }
+
+    // Warning: not general use of executing user token query 
+    public List<UserToken> executeUserTokenQuery(String sql) {
+        return jdbcTemplate.query(sql, new RowMapper<UserToken>() {
+
+            @Override
+            public UserToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
                 UserToken temp = new UserToken();
                 temp.setLogin(rs.getString("name"), rs.getString("hashedpassword"), rs.getString("id"));
                 return temp;
