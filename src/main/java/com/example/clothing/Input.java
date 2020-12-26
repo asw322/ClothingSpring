@@ -29,4 +29,15 @@ public class Input {
         System.out.print(str);
         return CONSOLE.nextLine();
     }
+
+    public String getRobustInput(String str) {
+        String temp;
+        while(true) {
+            temp = getString(str);
+            if(temp.length() > 0) {
+                break;
+            }
+        }
+        return temp; 
+    }
 }

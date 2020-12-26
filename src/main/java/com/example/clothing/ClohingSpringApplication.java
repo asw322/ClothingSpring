@@ -58,8 +58,9 @@ public class ClohingSpringApplication {
 			CLIENT.createAccount();
 		}
 		
-		System.out.println("My Portfolio");
-		CLIENT.showPortfolio();
+		while(true) {
+			CLIENT.showPortfolio();
+		}
 	}
 
 }

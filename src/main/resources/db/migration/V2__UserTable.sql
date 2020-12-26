@@ -1,0 +1,4 @@
+-- CREATE TABLE userData (
+--     ID VARCHAR(100) NOT NULL PRIMARY KEY, 
+
+-- );

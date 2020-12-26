@@ -58,10 +58,10 @@ public class AccessControl {
         System.out.println("Sign in");
 
         // Getting Username
-        USERNAME = this.getRobustInput("Email or Username: ");
+        USERNAME = INPUT.getRobustInput("Email or Username: ");
 
         // Getting password
-        PASSWORD = this.getRobustInput("Password: ");
+        PASSWORD = INPUT.getRobustInput("Password: ");
         System.out.println("Input password = " + PASSWORD);
 
         // Hash the password
@@ -107,10 +107,10 @@ public class AccessControl {
         System.out.println("Creating New Account");
 
         // Getting Username
-        USERNAME = this.getRobustInput("Email or Username: ");
+        USERNAME = INPUT.getRobustInput("Email or Username: ");
 
         // Getting password
-        PASSWORD = this.getRobustInput("Password: ");
+        PASSWORD = INPUT.getRobustInput("Password: ");
         System.out.println("Input password = " + PASSWORD);
 
         // Confirming password
@@ -142,9 +142,9 @@ public class AccessControl {
         System.out.println("Account created..");
         System.out.println("Let's begin by inputting your basic information");
         
-        NAME = this.getRobustInput("Enter your name: ");
-        BIRTHDATE = this.getRobustInput("Enter your birthdate (YYYY-MM-DD): ");
-        SEX = this.getRobustInput("Enter your gender: \n1. Male\n2. Female\nEnter: ");
+        NAME = INPUT.getRobustInput("Enter your name: ");
+        BIRTHDATE = INPUT.getRobustInput("Enter your birthdate (YYYY-MM-DD): ");
+        SEX = INPUT.getRobustInput("Enter your gender: \n1. Male\n2. Female\nEnter: ");
 
         // Create a user token 
         this.createUserToken(USERNAME, HASHEDPASSWORD, NAME, BIRTHDATE, SEX, ID);
@@ -204,22 +204,5 @@ public class AccessControl {
         else {
             return null;
         }
-    }
-
-
-    /**
-     * Handles Robust Inputs
-     * @param str
-     * @return
-     */
-    private String getRobustInput(String str) {
-        String temp;
-        while(true) {
-            temp = INPUT.getString(str);
-            if(temp.length() > 0) {
-                break;
-            }
-        }
-        return temp; 
     }
 }
