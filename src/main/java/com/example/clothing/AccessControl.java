@@ -1,17 +1,9 @@
 package com.example.clothing;
 
-import java.beans.Statement;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-
 import java.util.*;
 
 import com.example.clothing.DAO.UserDataAccessService;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,10 +14,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class AccessControl {
     // Private data fields
-
-    // @Autowired
-    private JdbcTemplate jdbcTemplate;
-
     @Autowired
     private Encrypt ENCRYPT;
 
@@ -90,16 +78,12 @@ public class AccessControl {
             login();
         }
 
-        // List<UserToken> elem = DATA_ACCESS_SERVICE.getAllPeople();
+        String sql = "SELECT * FROM person WHERE name='" + USERNAME + "' AND hashedpassword='" + HASHEDPASSWORD + "'";
+        List<UserToken> res = USER_DATA_ACCESS_SERVICE.getUserData(sql);
 
-
-        String sql = "SELECT * FROM person";
-        // String sql = "SELECT * FROM person WHERE username = " + USERNAME + " AND hashedpassword = " + HASHEDPASSWORD;
-        List<UserToken> res = USER_DATA_ACCESS_SERVICE.executeUserTokenQuery(sql);
-
-        for(int i = 0; i < res.size(); i++) {
-            res.get(i).printUserToken();
-        }
+        // for(int i = 0; i < res.size(); i++) {
+        //     res.get(i).printUserToken();
+        // }
 
         // Check if result is correct
         if(res.size() == 1) {
@@ -109,6 +93,7 @@ public class AccessControl {
         }
         else {
             // Login failed
+            System.out.println("Login failed");
             INVALID_LOGIN_ATTEMPTS++;
             login();
         }
@@ -150,6 +135,8 @@ public class AccessControl {
         // Create a User account
         System.out.println("Creating your account..");
         System.out.println("Generating Unique ID: ");
+
+        ID = "" + USER_DATA_ACCESS_SERVICE.generateNewID();
         
 
         System.out.println("Account created..");
@@ -161,8 +148,13 @@ public class AccessControl {
 
         // Create a user token 
         this.createUserToken(USERNAME, HASHEDPASSWORD, NAME, BIRTHDATE, SEX, ID);
-        
-        // We can store this USERTOKEN into the DB 
+
+        System.out.println("ID = " + USERTOKEN.ID);
+        System.out.println("username = " + USERTOKEN.USERNAME);
+        System.out.println("hashedpassword = " + USERTOKEN.HASHEDPASSWORD);
+
+        // Insert new user into database
+        USER_DATA_ACCESS_SERVICE.insertNewUser(USERTOKEN);
 
         return USERTOKEN;
     }
@@ -229,19 +221,5 @@ public class AccessControl {
             }
         }
         return temp; 
-    }
-
-    public List<UserToken> getAllPeople() {
-        System.out.println("Grabbing all users!");
-        return jdbcTemplate.query("SELECT * FROM person", new RowMapper<UserToken>() {
-
-            @Override
-            public UserToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
-                System.out.println("Setting up new user!");
-                UserToken temp = new UserToken();
-                temp.setLogin(rs.getString("name"), rs.getString("hashedpassword"), rs.getString("id"));
-                return temp;
-            }
-        });
     }
 }

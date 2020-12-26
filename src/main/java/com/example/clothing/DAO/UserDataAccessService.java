@@ -41,6 +41,10 @@ public class UserDataAccessService {
     }
 
 
+    /**
+     * Returns a list of all users
+     * @return
+     */
     public List<UserToken> getAllPeople() {
         System.out.println("Grabbing all users!");
         final String sql = "SELECT * FROM person";
@@ -56,8 +60,13 @@ public class UserDataAccessService {
         });
     }
 
-    // Warning: not general use of executing user token query 
-    public List<UserToken> executeUserTokenQuery(String sql) {
+
+    /**
+     * Gets the user data for login 
+     * @param sql
+     * @return
+     */
+    public List<UserToken> getUserData(String sql) {
         return jdbcTemplate.query(sql, new RowMapper<UserToken>() {
 
             @Override
@@ -67,5 +76,33 @@ public class UserDataAccessService {
                 return temp;
             }
         });
+    }
+
+
+    /**
+     * Generates a new ID by taking the highest ID + 1 
+     */
+    public int generateNewID() {
+        final String sql = "SELECT MAX(id) AS largestId FROM person";
+        List<Integer> res= jdbcTemplate.query(sql, new RowMapper<Integer>() {
+            
+            @Override
+            public Integer mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                return Integer.parseInt(rs.getString("largestId"));
+            }
+        });
+
+        return (res.get(0) + 1);
+    }
+
+
+
+    /**
+     * Inserting a user user into the person table
+     */
+    public void insertNewUser(UserToken user) {
+        final String sql = "INSERT INTO person (id, name, hashedpassword) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, user.ID, user.USERNAME, user.HASHEDPASSWORD);
+        System.out.println("Insertion successful");
     }
 }
