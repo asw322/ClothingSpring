@@ -57,3 +57,8 @@ Trello Board: https://trello.com/b/4G4Upgg2
 <!-- Enter the demodb database -->
 > \c demodb 
 > \dt
+
+
+# Test Account
+username: test
+password: test
