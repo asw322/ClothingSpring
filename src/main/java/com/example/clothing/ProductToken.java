@@ -75,6 +75,12 @@ public class ProductToken {
             PRODUCT_URL = _PRODUCT_URL;
     }
 
+    public void setDimensions(String _PRODUCT_LENGTH, String _PRODUCT_HEIGHT, String _PRODUCT_WIDTH) {
+        PRODUCT_LENGTH = _PRODUCT_LENGTH;
+        PRODUCT_HEIGHT = _PRODUCT_HEIGHT;
+        PRODUCT_WIDTH = _PRODUCT_WIDTH;
+    }
+
     public void printProductToken() {
         System.out.println("\nPrinting Product Token: ");
         System.out.println("Product ID: " + PRODUCT_ID);
