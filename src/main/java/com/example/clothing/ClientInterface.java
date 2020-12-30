@@ -82,7 +82,7 @@ public class ClientInterface {
         printHeader("Showing Collection");
         String sql = "";
 
-        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getProductDetail(sql);
+        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetail(sql);
         int res_size = res.size();
 
         for(int i = 0; i < res_size; i++) {
@@ -96,7 +96,7 @@ public class ClientInterface {
         printHeader("Querying for Specific Product");
         String sql = "";
 
-        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getProductDetail(sql);
+        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetail(sql);
         int res_size = res.size();
 
         for(int i = 0; i < res_size; i++) {
@@ -116,7 +116,7 @@ public class ClientInterface {
         String sql = "";
 
         // There may be multiple most worn products
-        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getProductDetail(sql);
+        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetail(sql);
         int res_size = res.size();
 
         for(int i = 0; i < res_size; i++) {

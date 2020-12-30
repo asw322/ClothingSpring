@@ -116,4 +116,36 @@ public class ClothingDataAccessService {
             }
         });
     }
+
+    
+    /**
+     * Input: product_name 
+     * Output: product_description
+     */
+
+    public List<String> getProductDescriptionOnProductName(String sql) {
+        return jdbcTemplate.query(sql, new RowMapper<String>() {
+
+            @Override
+            public String mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                return rs.getString("product_description");
+            }
+        });
+    }
+
+
+
+    /**
+     * Input: product_name 
+     * Output: manufacturer_name
+     */
+    public List<String> getManufacturerNameOnProductName(String sql) {
+        return jdbcTemplate.query(sql, new RowMapper<String>() {
+
+            @Override
+            public String mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                return rs.getString("manufacturer_name");
+            }
+        });
+    }
 }
