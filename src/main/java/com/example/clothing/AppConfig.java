@@ -12,12 +12,9 @@ import java.util.*;
 import com.example.clothing.DAO.UserDataAccessService;
 
 
-import org.flywaydb.core.internal.jdbc.JdbcTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-// import org.springframework.jdbc.datasource.*;
 
 @Configuration
 public class AppConfig {

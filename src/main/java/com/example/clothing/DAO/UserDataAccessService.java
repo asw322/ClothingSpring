@@ -14,6 +14,7 @@ import java.sql.SQLException;
 
 import java.util.*;
 
+import com.example.clothing.ProductToken;
 import com.example.clothing.UserToken;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class UserDataAccessService {
     // @Autowired
     private DriverManagerDataSource dataSource;
     private JdbcTemplate jdbcTemplate;
+
+    private ProductToken productToken;
 
 
     public UserDataAccessService() {
@@ -74,6 +77,57 @@ public class UserDataAccessService {
                 UserToken temp = new UserToken();
                 temp.setLogin(rs.getString("name"), rs.getString("hashedpassword"), rs.getString("id"));
                 return temp;
+            }
+        });
+    }
+
+    /**
+     * Get wear count on some specific user owned product
+     * Returns on [null, -1] represent error cases 
+     * @param sql
+     * @return
+     */
+    public List<Integer> getWearCount(String sql) {
+        return jdbcTemplate.query(sql, new RowMapper<Integer>() {
+
+            @Override
+            public Integer mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                try {
+                    return Integer.parseInt(rs.getString("wear_count"));
+                }
+                catch(NumberFormatException e) {
+                    System.out.println("Wear count retrieval error");
+                    return -1;
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 
+     * @param sql
+     * @return
+     */
+    public List<ProductToken> getProductDetail(String sql) {
+        return jdbcTemplate.query(sql, new RowMapper<ProductToken>() {
+
+            @Override
+            public ProductToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                return new ProductToken(
+                    rs.getString("product_id"),
+                    rs.getString("manufacturer_name"),
+                    rs.getString("product_reference_number"),
+                    rs.getString("product_name"),
+                    rs.getString("product_description"),
+                    rs.getDouble("price_in_dollars"),
+                    rs.getString("product_length"),
+                    rs.getString("product_height"),
+                    rs.getString("product_width"),
+                    rs.getString("product_style"),
+                    rs.getString("product_color"),
+                    rs.getString("product_url")
+                );
             }
         });
     }

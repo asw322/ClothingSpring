@@ -1,6 +1,8 @@
 package com.example.clothing;
 
-// import java.util.Scanner;
+import java.util.List;
+
+import com.example.clothing.DAO.UserDataAccessService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,10 +14,16 @@ public class ClientInterface {
     private AccessControl CONTROL;
 
     @Autowired
+    private Encrypt ENCRYPT;
+
+    @Autowired
     private Input INPUT;
 
     @Autowired
     private UserToken USERTOKEN;
+
+    @Autowired 
+    private UserDataAccessService USER_DATA_ACCESS_SERVICE;
 
     public ClientInterface() {
         System.out.println("Client Interface Instance Created");
@@ -70,8 +78,52 @@ public class ClientInterface {
         }
     }
 
-    private void seeCollection() {
+    public List<ProductToken> seeCollection() {
         printHeader("Showing Collection");
+        String sql = "";
+
+        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getProductDetail(sql);
+        int res_size = res.size();
+
+        for(int i = 0; i < res_size; i++) {
+            res.get(i).printProductToken();
+        }
+
+        return res; 
+    }
+
+    public List<ProductToken> queryProduct() {
+        printHeader("Querying for Specific Product");
+        String sql = "";
+
+        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getProductDetail(sql);
+        int res_size = res.size();
+
+        for(int i = 0; i < res_size; i++) {
+            res.get(i).printProductToken();
+        }
+
+        return res;
+    }
+
+    /**
+     * Future implementations: 
+     * Show the most worn product for each major categories 
+     * or allow user to input the category they want to see
+     */
+    public List<ProductToken> seeMostWorn() {
+        printHeader("Showing Most Worn Product");
+        String sql = "";
+
+        // There may be multiple most worn products
+        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getProductDetail(sql);
+        int res_size = res.size();
+
+        for(int i = 0; i < res_size; i++) {
+            res.get(i).printProductToken();
+        }
+
+        return res; 
     }
 
     private void recOutfit() {
@@ -80,8 +132,120 @@ public class ClientInterface {
 
     private void settings() {
         printHeader("Settings");
+
+        String action;
+
+        while(true) {
+            action = INPUT.getRobustInput("Select your action:\n1. Change Username\n2. Change Password\n3. Change Sex\nAny: Return\nEnter: ");
+
+            if(action.equals("1")) {
+                changeUsername();
+            }
+            else if(action.equals("2")) {
+                changePassword();
+            }
+            else if(action.equals("3")) {
+                changeSex();
+            }
+            else {
+                break;
+            }
+        }
     }
 
+
+    /**
+     * SETTINGS HELPER FUNCTIONS
+     */
+
+    private void changeUsername() {
+        printHeader("Change Username");
+
+        String original, modified;
+
+        // Enter old username 
+        original = INPUT.getRobustInput("Enter Old Username: ");
+
+        // Enter new username
+        modified = INPUT.getRobustInput("Enter New Username: ");
+
+        // Modify username 
+            // First check if original username matches the username on UserToken
+        
+        if(original.toLowerCase().equals(USERTOKEN.USERNAME.toLowerCase())) {
+            // Mofiy username
+
+            // SQL UPDATE statement
+            String sql = "";
+
+
+        } else {
+            System.out.println("Old Username did not match up");
+        }
+    }
+
+    private void changePassword() {
+        printHeader("Change Password");
+
+        String original, modified;
+
+        // Enter old password 
+        original = INPUT.getRobustInput("Enter Old Password: ");
+
+        while(true) {
+            // Enter new password
+            modified = INPUT.getRobustInput("Enter New Password: ");
+
+            String PASSWORD2 = INPUT.getString("Re-enter New Password: ");
+            if(modified.equals(PASSWORD2)) {
+                break;
+            }
+            else {
+                System.out.println("New passwords do not match");
+            }
+        }
+
+        // Hash the password
+        String original_hashed = ENCRYPT.getHash(original);
+        original = "";
+
+        
+        if(original_hashed.toLowerCase().equals(USERTOKEN.HASHEDPASSWORD.toLowerCase())) {
+            // Mofiy password
+
+            // SQL UPDATE statement
+            String sql = "";
+
+
+        } else {
+            System.out.println("Old password did not match up");
+        }
+    }
+
+    private void changeSex() {
+        printHeader("Change Sex");
+
+        String modified;
+
+        modified = INPUT.getRobustInput("Enter New Sex");
+
+        String sql = "";
+
+        // UPDATE the sex parameter
+    }
+
+
+
+
+    /**
+     * HELPER FUNCTIONS TO PRINT 
+     */
+
+    
+    /**
+    * Prints headers
+    * @param headerName
+    */
     public void printHeader(String headerName) {
         System.out.println("\n");
         System.out.println(headerName);
