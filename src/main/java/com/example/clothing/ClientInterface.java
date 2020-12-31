@@ -3,6 +3,8 @@ package com.example.clothing;
 import java.util.List;
 
 import com.example.clothing.DAO.User_DAO.UserDataAccessService;
+import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessService; 
+import com.example.clothing.DAO.Personality_DAO.PersonalityDataAccessService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,12 @@ public class ClientInterface {
 
     @Autowired 
     private UserDataAccessService USER_DATA_ACCESS_SERVICE;
+
+    @Autowired
+    private ClothingDataAccessService CLOTHING_DATA_ACCESS_SERVICE;
+
+    @Autowired
+    private PersonalityDataAccessService PERSONALITY_DATA_ACCESS_SERVICE;
 
     public ClientInterface() {
         System.out.println("Client Interface Instance Created");
