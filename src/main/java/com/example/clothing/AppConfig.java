@@ -9,7 +9,7 @@ package com.example.clothing;
 
 import java.util.*;
 
-import com.example.clothing.DAO.UserDataAccessService;
+import com.example.clothing.DAO.User_DAO.UserDataAccessService;
 
 
 import org.springframework.context.annotation.Bean;

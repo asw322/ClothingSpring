@@ -1,4 +1,4 @@
-package com.example.clothing.DAO;
+package com.example.clothing.DAO.Clothing_DAO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

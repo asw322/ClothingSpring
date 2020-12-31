@@ -1,4 +1,4 @@
-package com.example.clothing.DAO;
+package com.example.clothing.DAO.User_DAO;
 
 /**
  * Basic API backend class or also called the Data Access Object (DAO)

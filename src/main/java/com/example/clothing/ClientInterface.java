@@ -2,7 +2,7 @@ package com.example.clothing;
 
 import java.util.List;
 
-import com.example.clothing.DAO.UserDataAccessService;
+import com.example.clothing.DAO.User_DAO.UserDataAccessService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
