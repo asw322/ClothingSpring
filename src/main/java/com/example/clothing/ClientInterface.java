@@ -34,7 +34,7 @@ public class ClientInterface {
     private PersonalityDataAccessService PERSONALITY_DATA_ACCESS_SERVICE;
 
     public ClientInterface() {
-        System.out.println("Client Interface Instance Created");
+        // System.out.println("Client Interface Instance Created");
     }  
 
     /**

@@ -23,8 +23,8 @@ public class AccessControl {
     @Autowired 
     private UserToken USERTOKEN;
 
-    @Autowired 
-    private UserDataAccessService USER_DATA_ACCESS_SERVICE;
+    @Autowired
+    private ProcessingInterface PROCESSING_INTERFACE;
 
     private int INVALID_LOGIN_ATTEMPTS;
     private int MAX_INVALID_LOGIN_ALLOWED;
@@ -78,28 +78,16 @@ public class AccessControl {
             login();
         }
 
-        String sql = "SELECT * FROM person WHERE name='" + USERNAME + "' AND hashedpassword='" + HASHEDPASSWORD + "'";
-        List<UserToken> res = USER_DATA_ACCESS_SERVICE.getUserData(sql);
+        // New method
+        USERTOKEN = PROCESSING_INTERFACE.userLogin(USERNAME, HASHEDPASSWORD);
 
-        // for(int i = 0; i < res.size(); i++) {
-        //     res.get(i).printUserToken();
-        // }
-
-        // Check if result is correct
-        if(res.size() == 1) {
-            // Login success
-            System.out.println("Login success");
-            return res.get(0);
-        }
-        else {
-            // Login failed
+        if(USERTOKEN == null) {
             System.out.println("Login failed");
             INVALID_LOGIN_ATTEMPTS++;
             login();
         }
 
-        // Default return
-        return null;
+        return USERTOKEN;
     }
 
     // CREATING NEW ACCOUNT
@@ -136,8 +124,8 @@ public class AccessControl {
         System.out.println("Creating your account..");
         System.out.println("Generating Unique ID: ");
 
-        ID = "" + USER_DATA_ACCESS_SERVICE.generateNewID();
-        
+        // Gets the highest ID value in person table + 1
+        ID = PROCESSING_INTERFACE.generateNewID();        
 
         System.out.println("Account created..");
         System.out.println("Let's begin by inputting your basic information");
@@ -154,13 +142,12 @@ public class AccessControl {
         System.out.println("hashedpassword = " + USERTOKEN.HASHEDPASSWORD);
 
         // Insert new user into database
-        USER_DATA_ACCESS_SERVICE.insertNewUser(USERTOKEN);
-
-        return USERTOKEN;
+        // returns the same USERTOKEN that was passed in 
+        return PROCESSING_INTERFACE.createAccount(USERTOKEN);
     }
 
     /**
-     * 
+     * Sets values for USERTOKEN
      * @param _USERNAME
      * @param _HASHEDPASSWORD
      * @param _NAME

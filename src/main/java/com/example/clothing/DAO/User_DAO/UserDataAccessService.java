@@ -119,17 +119,27 @@ public class UserDataAccessService {
     /**
      * Generates a new ID by taking the highest ID + 1 
      */
-    public int generateNewID() {
-        final String sql = "SELECT MAX(id) AS largestId FROM person";
-        List<Integer> res= jdbcTemplate.query(sql, new RowMapper<Integer>() {
+    // public int generateNewID() {
+    //     final String sql = "SELECT MAX(id) AS largestId FROM person";
+    //     List<Integer> res= jdbcTemplate.query(sql, new RowMapper<Integer>() {
+            
+    //         @Override
+    //         public Integer mapRow(ResultSet rs, int rowNumber) throws SQLException {
+    //             return Integer.parseInt(rs.getString("largestId"));
+    //         }
+    //     });
+
+    //     return (res.get(0) + 1);
+    // }
+
+    public List<Integer> getHighestID(String sql) {
+        return jdbcTemplate.query(sql, new RowMapper<Integer>() {
             
             @Override
             public Integer mapRow(ResultSet rs, int rowNumber) throws SQLException {
                 return Integer.parseInt(rs.getString("largestId"));
             }
         });
-
-        return (res.get(0) + 1);
     }
 
 
@@ -137,9 +147,13 @@ public class UserDataAccessService {
     /**
      * Inserting a user user into the person table
      */
-    public void insertNewUser(UserToken user) {
-        final String sql = "INSERT INTO person (id, name, hashedpassword) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, user.ID, user.USERNAME, user.HASHEDPASSWORD);
-        System.out.println("Insertion successful");
+    // public void insertNewUser(UserToken user) {
+    //     final String sql = "INSERT INTO person (id, name, hashedpassword) VALUES (?, ?, ?)";
+    //     jdbcTemplate.update(sql, user.ID, user.USERNAME, user.HASHEDPASSWORD);
+    //     System.out.println("Insertion successful");
+    // }
+
+    public int insertNewUser(String sql) {        
+        return jdbcTemplate.update(sql);
     }
 }
