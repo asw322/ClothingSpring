@@ -28,10 +28,7 @@ public class ClientInterface {
     private UserDataAccessService USER_DATA_ACCESS_SERVICE;
 
     @Autowired
-    private ClothingDataAccessService CLOTHING_DATA_ACCESS_SERVICE;
-
-    @Autowired
-    private PersonalityDataAccessService PERSONALITY_DATA_ACCESS_SERVICE;
+    private ProcessingInterface PROCESSING_INTERFACE;
 
     public ClientInterface() {
         // System.out.println("Client Interface Instance Created");
@@ -88,9 +85,8 @@ public class ClientInterface {
 
     public List<ProductToken> seeCollection() {
         printHeader("Showing Collection");
-        String sql = "";
 
-        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetail(sql);
+        List<ProductToken> res = PROCESSING_INTERFACE.getWholeCollection(USERTOKEN.ID);
         int res_size = res.size();
 
         for(int i = 0; i < res_size; i++) {
@@ -100,11 +96,11 @@ public class ClientInterface {
         return res; 
     }
 
-    public List<ProductToken> queryProduct() {
+    public List<ProductToken> queryUserProduct() {
         printHeader("Querying for Specific Product");
-        String sql = "";
 
-        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetail(sql);
+        List<ProductToken> res = PROCESSING_INTERFACE.getUserProduct(USERTOKEN.ID);
+        // List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetail(sql);
         int res_size = res.size();
 
         for(int i = 0; i < res_size; i++) {
@@ -112,6 +108,11 @@ public class ClientInterface {
         }
 
         return res;
+    }
+
+    // TODO: makes call to ClothingDataAccessService
+    public List<ProductToken> queryAnyProduct() {
+        return null;
     }
 
     /**

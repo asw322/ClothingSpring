@@ -12,16 +12,37 @@ package com.example.clothing;
 
 import java.util.List;
 
+import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessService;
+import com.example.clothing.DAO.Personality_DAO.PersonalityDataAccessService;
 import com.example.clothing.DAO.User_DAO.UserDataAccessService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import org.apache.commons.validator.routines.UrlValidator;
 
 @Component
 public class ProcessingInterface {
 
     @Autowired
     private UserDataAccessService USER_DATA_ACCESS_SERVICE;
+
+    @Autowired
+    private ClothingDataAccessService CLOTHING_DATA_ACCESS_SERVICE;
+
+    @Autowired
+    private PersonalityDataAccessService PERSONALITY_DATA_ACCESS_SERVICE;
+
+    @Autowired
+    private Input INPUT;
+
+    private UrlValidator URL_VALIDATOR;
+
+    public ProcessingInterface() {
+        // Setting up URL validator
+        String[] schemes = {"http", "https"};
+        URL_VALIDATOR = new UrlValidator(schemes);
+    }
 
 
     /**
@@ -88,5 +109,46 @@ public class ProcessingInterface {
             System.out.println("Something went wrong");
             return "";
         }
+    }
+
+
+
+
+
+
+
+
+
+
+    public List<ProductToken> getWholeCollection(String ID) {
+        // Future impleemtnation idea: call ClothingDataAccessService instead of making it one line
+        String sql = "SELECT * FROM product WHERE product_id = (SELECT product_id FROM closet WHERE id = '" + ID + "')";
+        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetail(sql);
+        
+        if(res == null) {
+            System.out.println("Something went wrong");
+        }
+        return res;
+    }
+
+    public List<ProductToken> getUserProduct(String ID) {
+        // Get the product name first 
+        String in = INPUT.getRobustInput("Please Enter Product Name or URL: ");
+        List<ProductToken> res = null;
+
+        // Is a URL
+        if(URL_VALIDATOR.isValid(in)) {
+            System.out.println("Making Query on Product URL");
+            // MAKE QUERY TO USERDATAACCESSSERVICE.GETUSEROWNEDPRODUCTDETAIL BUT USE QUERY PARAMETER ON PRODUCT_URL
+        }
+        // Is NOT a URL
+        else {
+            System.out.println("Making Query on Product Name");
+            // MAKE QUERY TO USERDATAACCESSSERVICE.GETUSEROWNEDPRODUCTDETAIL BUT USE QUERY PARAMETER ON PRODUCT_NAME
+        }
+
+        // Clean up the result stored in res
+
+        return res;
     }
 }

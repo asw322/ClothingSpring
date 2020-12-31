@@ -9,7 +9,9 @@ package com.example.clothing;
 
 import java.util.*;
 
+import com.example.clothing.DAO.Personality_DAO.PersonalityDataAccessService;
 import com.example.clothing.DAO.User_DAO.UserDataAccessService;
+import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessService;
 
 
 import org.springframework.context.annotation.Bean;
@@ -54,10 +56,33 @@ public class AppConfig {
         return new UserToken();
     }
 
+
+
+
+
     @Bean
     @Primary
     public UserDataAccessService getDataAccessService() {
         return new UserDataAccessService();
+    }
+
+    @Bean
+    @Primary
+    public PersonalityDataAccessService getPersonalityDataAccessService() {
+        return new PersonalityDataAccessService();
+    }
+
+    @Bean
+    @Primary
+    public ClothingDataAccessService getClothingDataAccessService() {
+        return new ClothingDataAccessService();
+    }
+
+
+    @Bean
+    @Primary
+    public ProcessingInterface getProcessingInterface() {
+        return new ProcessingInterface();
     }
 
     // @Bean
