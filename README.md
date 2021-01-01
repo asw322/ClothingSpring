@@ -4,6 +4,8 @@ Version 1.2 of ClothingSpring
 
 # Abstract
 The Clothing Software is an advanced outfit matching software based on a given collection of clothings provided by the user, the clothing software recommends one outfit in the morning based on:
+
+
 1. The Weather
 2. Your calednar events
 3. Your favorite influencer(s) 
