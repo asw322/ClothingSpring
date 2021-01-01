@@ -137,6 +137,36 @@ public class UserDataAccessService {
     }
 
 
+    
+    public List<Object[]> getUserOwnedProductDetailWithWearCount(String sql) {
+        return jdbcTemplate.query(sql, new RowMapper<Object[]>() {
+            
+            @Override
+            public Object[] mapRow(ResultSet rs, int rowNumber) throws SQLException {
+
+                ProductToken temp = new ProductToken(
+                    rs.getString("product_id"),
+                    rs.getString("manufacturer_name"),
+                    rs.getString("product_reference_number"),
+                    rs.getString("product_name"),
+                    rs.getString("product_description"),
+                    rs.getDouble("price_in_dollars"),
+                    rs.getString("product_length"),
+                    rs.getString("product_height"),
+                    rs.getString("product_width"),
+                    rs.getString("product_style"),
+                    rs.getString("product_color"),
+                    rs.getString("product_url")
+                );
+
+                Object[] res = {temp, rs.getString("wear_count")};
+
+                return res;
+            }
+        });
+    }
+
+
     /**
      * Generates a new ID by taking the highest ID + 1 
      */

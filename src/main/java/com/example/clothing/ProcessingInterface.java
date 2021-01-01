@@ -151,4 +151,20 @@ public class ProcessingInterface {
 
         return res;
     }
+
+
+    /**
+     * return a list of objects because 
+     * @param ID
+     * @return
+     */
+    public List<Object[]> getMostWornProduct(String ID) {
+        String sql = "SELECT *FROM user_data INNER JOIN closet ON user_data.id = closet.id WHERE user_data.id = '" + ID + "' ORDER BY wear_count DESC LIMIT 1";
+        
+        List<Object[]> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetailWithWearCount(sql);
+
+        // Do we need to process res? 
+
+        return res;
+    }
 }

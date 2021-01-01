@@ -100,7 +100,6 @@ public class ClientInterface {
         printHeader("Querying for Specific Product");
 
         List<ProductToken> res = PROCESSING_INTERFACE.getUserProduct(USERTOKEN.ID);
-        // List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetail(sql);
         int res_size = res.size();
 
         for(int i = 0; i < res_size; i++) {
@@ -122,10 +121,10 @@ public class ClientInterface {
      */
     public List<ProductToken> seeMostWorn() {
         printHeader("Showing Most Worn Product");
-        String sql = "";
 
         // There may be multiple most worn products
-        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetail(sql);
+        List<ProductToken> res = PROCESSING_INTERFACE.getMostWornProduct(USERTOKEN.ID);
+        // List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetail(sql);
         int res_size = res.size();
 
         for(int i = 0; i < res_size; i++) {
