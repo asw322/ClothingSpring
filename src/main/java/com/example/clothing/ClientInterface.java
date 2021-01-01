@@ -119,16 +119,17 @@ public class ClientInterface {
      * Show the most worn product for each major categories 
      * or allow user to input the category they want to see
      */
-    public List<ProductToken> seeMostWorn() {
+    public List<Object[]> seeMostWorn() {
         printHeader("Showing Most Worn Product");
 
         // There may be multiple most worn products
-        List<ProductToken> res = PROCESSING_INTERFACE.getMostWornProduct(USERTOKEN.ID);
-        // List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetail(sql);
+        List<Object[]> res = PROCESSING_INTERFACE.getMostWornProduct(USERTOKEN.ID);
         int res_size = res.size();
 
         for(int i = 0; i < res_size; i++) {
-            res.get(i).printProductToken();
+            ProductToken product = (ProductToken) res.get(i)[0];
+            System.out.println("Wear count: " + res.get(i)[1]);
+            product.printProductToken();
         }
 
         return res; 
