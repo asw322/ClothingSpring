@@ -159,11 +159,49 @@ public class ProcessingInterface {
      * @return
      */
     public List<Object[]> getMostWornProduct(String ID) {
-        String sql = "SELECT *FROM user_data INNER JOIN closet ON user_data.id = closet.id WHERE user_data.id = '" + ID + "' ORDER BY wear_count DESC LIMIT 1";
+        String sql = "SELECT *FROM user_data NATURAL JOIN closet WHERE id = '" + ID + "' ORDER BY wear_count DESC LIMIT 1";
         
         List<Object[]> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetailWithWearCount(sql);
 
         // Do we need to process res? 
+
+        return res;
+    }
+
+
+    public List<PersonalityToken> getAllPersonality() {
+        String sql = "SELECT * FROM personality";
+        return PERSONALITY_DATA_ACCESS_SERVICE.getAllPersonality(sql);
+    }
+
+
+    public PersonalityToken getPersonality() {
+        String in = INPUT.getRobustInput("Enter Personality Type: ");
+        String sql = "SELECT * FROM personality WHERE personality_types = '" + in + "'";
+
+        List<PersonalityToken> res = PERSONALITY_DATA_ACCESS_SERVICE.getPersonality(sql);
+
+        if(res.size() == 1) {
+            return res.get(0);
+        }
+        else if(res.size() == 0) {
+            System.out.println("The personality type does not exist");
+            return new PersonalityToken();
+        }
+        else {
+            return null;
+        }
+    }
+
+    
+    public List<PersonalityToken> getMostPopularPersonality() {
+        String sql = "SELECT * FROM personality ORDER BY personality_count DESC LIMIT 1";
+        return PERSONALITY_DATA_ACCESS_SERVICE.getMostPopularPersonality(sql);
+    }
+
+    public List<PersonalityToken> getPersonalityStrength(String ID) {
+        String sql = "SELECT * FROM user_personality NATURAL JOIN personality WHERE id = '" + ID + "' ORDER BY personality_strength DESC";
+        List<PersonalityToken> res =  PERSONALITY_DATA_ACCESS_SERVICE.getPersonalityStrength(sql);
 
         return res;
     }
