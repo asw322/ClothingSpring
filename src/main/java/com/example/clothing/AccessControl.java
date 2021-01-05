@@ -1,9 +1,5 @@
 package com.example.clothing;
 
-import java.util.*;
-
-import com.example.clothing.DAO.User_DAO.UserDataAccessService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -182,10 +178,10 @@ public class AccessControl {
      * @return
      */
     private String checkSex(String _SEX) {
-        if(SEX.equals("1") || SEX.toLowerCase().equals("male")) {
+        if(_SEX.equals("1") || _SEX.equalsIgnoreCase("male")) {
             return "1";
         }
-        else if(SEX.equals("2") || SEX.toLowerCase().equals("female")) {
+        else if(_SEX.equals("2") || _SEX.equalsIgnoreCase("female")) {
             return "2";
         }
         else {

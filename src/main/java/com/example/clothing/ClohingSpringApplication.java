@@ -57,10 +57,12 @@ public class ClohingSpringApplication {
 		else if(action.equals("2")) {
 			CLIENT.createAccount();
 		}
-		
-		while(true) {
-			CLIENT.showPortfolio();
-		}
-	}
 
+		CLIENT.showPortfolio();
+		
+		// while(true) {
+			// CLIENT.showPortfolio();
+		// }
+		// System.out.println("hello");
+	}
 }

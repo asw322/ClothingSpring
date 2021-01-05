@@ -38,6 +38,10 @@ public class ProcessingInterface {
 
     private UrlValidator URL_VALIDATOR;
 
+
+    // DEFINED CONSTANTS
+    private String STANDARD_ERROR = "Something went wrong";
+
     public ProcessingInterface() {
         // Setting up URL validator
         String[] schemes = {"http", "https"};
@@ -81,7 +85,7 @@ public class ProcessingInterface {
             System.out.println("Insertion successful");
         }
         else {
-            System.out.println("Something went wrong");
+            System.out.println(STANDARD_ERROR);
         }
 
 
@@ -106,7 +110,7 @@ public class ProcessingInterface {
         }
         // Error case
         else {
-            System.out.println("Something went wrong");
+            System.out.println(STANDARD_ERROR);
             return "";
         }
     }
@@ -126,7 +130,7 @@ public class ProcessingInterface {
         List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetail(sql);
         
         if(res == null) {
-            System.out.println("Something went wrong");
+            System.out.println(STANDARD_ERROR);
         }
         return res;
     }

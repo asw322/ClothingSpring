@@ -1,10 +1,11 @@
 package com.example.clothing;
 
+import java.util.Collections;
 import java.util.List;
 
-import com.example.clothing.DAO.User_DAO.UserDataAccessService;
-import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessService; 
-import com.example.clothing.DAO.Personality_DAO.PersonalityDataAccessService;
+// import com.example.clothing.DAO.User_DAO.UserDataAccessService;
+// import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessService; 
+// import com.example.clothing.DAO.Personality_DAO.PersonalityDataAccessService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,14 +25,14 @@ public class ClientInterface {
     @Autowired
     private UserToken USERTOKEN;
 
-    @Autowired 
-    private UserDataAccessService USER_DATA_ACCESS_SERVICE;
+    // @Autowired 
+    // private UserDataAccessService USER_DATA_ACCESS_SERVICE;
 
     @Autowired
     private ProcessingInterface PROCESSING_INTERFACE;
 
     public ClientInterface() {
-        // System.out.println("Client Interface Instance Created");
+        //Empty
     }  
 
     /**
@@ -56,6 +57,7 @@ public class ClientInterface {
 
         String action;
 
+        // Get user input
         while(true) {
             action = INPUT.getRobustInput("Select your action:\n1. See Outfit Collection\n2. Recommend An Outfit\n3. Settings\n4. Exit\nEnter: ");
             if(action.equals("1") || action.equals("2") || action.equals("3") || action.equals("4")) {
@@ -111,7 +113,7 @@ public class ClientInterface {
 
     // TODO: makes call to ClothingDataAccessService
     public List<ProductToken> queryAnyProduct() {
-        return null;
+        return Collections.emptyList();
     }
 
     /**
@@ -181,8 +183,7 @@ public class ClientInterface {
         // Modify username 
             // First check if original username matches the username on UserToken
         
-        if(original.toLowerCase().equals(USERTOKEN.USERNAME.toLowerCase())) {
-            // Mofiy username
+        if(original.equalsIgnoreCase(USERTOKEN.USERNAME)) {
 
             // SQL UPDATE statement
             String sql = "";
@@ -219,8 +220,7 @@ public class ClientInterface {
         original = "";
 
         
-        if(original_hashed.toLowerCase().equals(USERTOKEN.HASHEDPASSWORD.toLowerCase())) {
-            // Mofiy password
+        if(original_hashed.equalsIgnoreCase(USERTOKEN.HASHEDPASSWORD)) {
 
             // SQL UPDATE statement
             String sql = "";
