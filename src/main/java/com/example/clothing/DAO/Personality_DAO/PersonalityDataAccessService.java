@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.example.clothing.PersonalityToken;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
@@ -18,17 +19,12 @@ import org.springframework.jdbc.core.RowMapper;
 
 @Component
 public class PersonalityDataAccessService {
-    private DriverManagerDataSource dataSource;
+    
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     public PersonalityDataAccessService() {
-        dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver"); 
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/demodb");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("password");
-
-        jdbcTemplate = new JdbcTemplate(dataSource);
+        // Empty
     }
 
     /**

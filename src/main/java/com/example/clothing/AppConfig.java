@@ -4,7 +4,6 @@
  * and does not recreate an new instance whenever a ContextApplication.getBean() call is made
  */
 
-
 package com.example.clothing;
 
 import java.util.*;
@@ -13,10 +12,11 @@ import com.example.clothing.DAO.Personality_DAO.PersonalityDataAccessService;
 import com.example.clothing.DAO.User_DAO.UserDataAccessService;
 import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessService;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 public class AppConfig {
@@ -85,23 +85,23 @@ public class AppConfig {
         return new ProcessingInterface();
     }
 
-    // @Bean
-    // @Primary
-    // public DriverManagerDataSource getDriverManagerDataSource() {
-    //     DriverManagerDataSource dataSource = new DriverManagerDataSource();
+    @Bean
+    @Primary
+    public DriverManagerDataSource getDriverManagerDataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-    //     // Set connection properties
-    //     dataSource.setDriverClassName("org.postgresql.Driver"); 
-    //     dataSource.setUrl("jdbc:postgresql://localhost:5432/demodb");
-    //     dataSource.setUsername("postgres");
-    //     dataSource.setPassword("password");
+        // Set connection properties
+        dataSource.setDriverClassName("org.postgresql.Driver"); 
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/demodb");
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("password");
 
-    //     return dataSource;
-    // }
+        return dataSource;
+    }
 
-    // @Bean
-    // @Primary
-    // public JdbcTemplate getJdbcTemplate() {
-    //     return new JdbcTemplate(null);
-    // }
+    @Bean
+    @Primary
+    public JdbcTemplate getJdbcTemplate() {
+        return new JdbcTemplate(getDriverManagerDataSource());
+    }
 }

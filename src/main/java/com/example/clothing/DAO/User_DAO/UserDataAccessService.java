@@ -27,20 +27,22 @@ import org.springframework.jdbc.core.RowMapper;
 public class UserDataAccessService {
 
     // @Autowired
-    private DriverManagerDataSource dataSource;
+    // private DriverManagerDataSource dataSource;
+
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     private ProductToken productToken;
 
 
     public UserDataAccessService() {
-        dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver"); 
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/demodb");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("password");
+        // dataSource = new DriverManagerDataSource();
+        // dataSource.setDriverClassName("org.postgresql.Driver"); 
+        // dataSource.setUrl("jdbc:postgresql://localhost:5432/demodb");
+        // dataSource.setUsername("postgres");
+        // dataSource.setPassword("password");
 
-        jdbcTemplate = new JdbcTemplate(dataSource);
+        // jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
 
