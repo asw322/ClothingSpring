@@ -2,7 +2,9 @@ package com.example.clothing.NetworkRequest;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import com.example.clothing.ProductToken;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -63,19 +65,47 @@ public class Request_HM {
     }
 
     private static void parseData() {
+        ArrayList<ProductToken> product_arr = new ArrayList<>();
+
         try {
             Object obj = new JSONParser().parse(new FileReader(path));
             JSONObject jo = (JSONObject) obj;
             JSONArray res = (JSONArray) jo.get("results");
-            
-            JSONObject jo2 = (JSONObject) res.get(0);
 
-            System.out.println((String) jo.get("starter"));
-            System.out.println((String) jo2.get("code"));
+            for(int i = 0; i < res.size(); i++) {
+                JSONObject tempClothing = (JSONObject) res.get(i);
+                String PRODUCT_ID = (String) tempClothing.get("code");
+                String MANUFACTURER_NAME = "HM";
+                String PRODUCT_REFERENCE_NUMBER = "HM_" + (String) tempClothing.get("pk");
+                String PRODUCT_NAME = (String) tempClothing.get("name");
+                String PRODUCT_DESCRIPTION;
+                double PRICE_IN_DOLLARS = (Double) ((JSONObject) tempClothing.get("price")).get("value");
+                String PRODUCT_LENGTH;
+                String PRODUCT_HEIGHT;
+                String PRODUCT_WIDTH;
+                String PRODUCT_STYLE;       // Might be able to get this from JSON?
+                String PRODUCT_COLOR = (String) ((JSONObject) tempClothing.get("color")).get("text");
+                String PRODUCT_URL;         // Might be able to get this from JSON?
+
+                /**
+                 * get the [images, articles->images, logoPicture, normalPicture] 
+                 * Might have to check if all other products follow the same format?
+                 * Solution: try to print out the URLS for every product to terminal first? 
+                 */
+                String[] PICTURE_URL_ARR;   // WORK FROM HERE
+                
+                // System.out.println("" + PRICE_IN_DOLLARS);
+                ProductToken product = new ProductToken(PRODUCT_ID, MANUFACTURER_NAME, PRODUCT_REFERENCE_NUMBER, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRICE_IN_DOLLARS, PRODUCT_LENGTH, PRODUCT_HEIGHT, PRODUCT_WIDTH, PRODUCT_STYLE, PRODUCT_COLOR, PRODUCT_URL, PICTURE_URL_ARR));
+                product_arr.add(product);
+            }
         }
         catch(Exception e) {
             e.printStackTrace();
         }
+
+
+
+        // Add product_arr product tokens to database
     }
 
     public static void main(String[] args) {
