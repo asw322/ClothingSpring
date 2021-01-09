@@ -1,14 +1,26 @@
 package com.example.clothing.NetworkRequest;
 
+import java.io.FileWriter;
 import java.io.IOException;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
+import org.json.simple.JSONArray;
+
+// import com.example.clothing.NetworkRequest.org.json.simple.*;
+// import com.example.clothing.DAO.Clothing_DAO;
+// import com.example.clothing.DAO.User_DAO.UserDataAccessService;
+
+
+
 public class Request_HM {
     public static void main(String[] args) {
+        JSONArray arr = new JSONArray();
+        FileWriter fw = null; 
         try {
+            fw = new FileWriter("/Users/alan/Desktop/Project/ClothingSpring/src/main/resources/data/HM/HM_data.txt");
             OkHttpClient client = new OkHttpClient();
         
             Request request = new Request.Builder()
@@ -20,10 +32,29 @@ public class Request_HM {
             
             Response response = client.newCall(request).execute();
             System.out.println("Printing now: ");
-            System.out.println(response.body().string());
+            // System.out.println(response.body().string());
+
+            String res = response.body().string();
+
+            fw.write(res);
+
+            fw.close();
         }   
         catch(IOException e) {
             e.printStackTrace();
-        }        
+        }    
+        // Ensure fw is closed
+        finally {
+            if(fw != null) {
+                try {
+                    fw.close();
+                }
+                catch(IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
+
+// cd ../../../../../resources/data/HM/
