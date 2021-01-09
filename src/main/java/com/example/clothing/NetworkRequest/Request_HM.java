@@ -8,6 +8,10 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.*;
+
+import java.io.FileReader;
 
 // import com.example.clothing.NetworkRequest.org.json.simple.*;
 // import com.example.clothing.DAO.Clothing_DAO;
@@ -16,13 +20,15 @@ import org.json.simple.JSONArray;
 
 
 public class Request_HM {
-    public static void main(String[] args) {
-        JSONArray arr = new JSONArray();
-        FileWriter fw = null; 
+
+    private static final String path = "/Users/alan/Desktop/Project/ClothingSpring/src/main/resources/data/HM/HM_data.json";
+    
+    private static void fetchData(FileWriter fw) {
+        // Outputting Response to json object
         try {
-            fw = new FileWriter("/Users/alan/Desktop/Project/ClothingSpring/src/main/resources/data/HM/HM_data.txt");
+            fw = new FileWriter(path);
             OkHttpClient client = new OkHttpClient();
-        
+
             Request request = new Request.Builder()
                 .url("https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list?country=asia2&lang=en&currentpage=0&pagesize=30&categories=men_all&concepts=H%26M%20MAN")
                 .get()
@@ -55,6 +61,27 @@ public class Request_HM {
             }
         }
     }
-}
 
-// cd ../../../../../resources/data/HM/
+    private static void parseData() {
+        try {
+            Object obj = new JSONParser().parse(new FileReader(path));
+            JSONObject jo = (JSONObject) obj;
+            JSONArray res = (JSONArray) jo.get("results");
+            
+            JSONObject jo2 = (JSONObject) res.get(0);
+
+            System.out.println((String) jo.get("starter"));
+            System.out.println((String) jo2.get("code"));
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        FileWriter fw = null; 
+
+        // fetchData(fw);      // Sets up all the data (Warning: will rewrite HM_data.json)
+        parseData();        // Parses all the data
+    }
+}
