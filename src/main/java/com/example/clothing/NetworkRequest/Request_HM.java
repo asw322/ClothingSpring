@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.example.clothing.ProcessingInterface;
 import com.example.clothing.ProductToken;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -12,6 +13,7 @@ import com.squareup.okhttp.Response;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.FileReader;
 
@@ -24,6 +26,9 @@ import java.io.FileReader;
 public class Request_HM {
 
     private static final String path = "/Users/alan/Desktop/Project/ClothingSpring/src/main/resources/data/HM/HM_data.json";
+
+    @Autowired
+    private static ProcessingInterface PROCESSING_INTERFACE;
     
     private static void fetchData(FileWriter fw) {
         // Outputting Response to json object
@@ -78,24 +83,24 @@ public class Request_HM {
                 String MANUFACTURER_NAME = "HM";
                 String PRODUCT_REFERENCE_NUMBER = "HM_" + (String) tempClothing.get("pk");
                 String PRODUCT_NAME = (String) tempClothing.get("name");
-                String PRODUCT_DESCRIPTION;
+                String PRODUCT_DESCRIPTION = null;
                 double PRICE_IN_DOLLARS = (Double) ((JSONObject) tempClothing.get("price")).get("value");
-                String PRODUCT_LENGTH;
-                String PRODUCT_HEIGHT;
-                String PRODUCT_WIDTH;
-                String PRODUCT_STYLE;       // Might be able to get this from JSON?
+                String PRODUCT_LENGTH = null;
+                String PRODUCT_HEIGHT = null;
+                String PRODUCT_WIDTH = null;
+                String PRODUCT_STYLE = null;       // Might be able to get this from JSON?
                 String PRODUCT_COLOR = (String) ((JSONObject) tempClothing.get("color")).get("text");
-                String PRODUCT_URL;         // Might be able to get this from JSON?
+                String PRODUCT_URL = null;         // Might be able to get this from JSON?
 
                 /**
                  * get the [images, articles->images, logoPicture, normalPicture] 
                  * Might have to check if all other products follow the same format?
                  * Solution: try to print out the URLS for every product to terminal first? 
                  */
-                String[] PICTURE_URL_ARR;   // WORK FROM HERE
+                String[] PICTURE_URL_ARR = null;   // WORK FROM HERE
                 
                 // System.out.println("" + PRICE_IN_DOLLARS);
-                ProductToken product = new ProductToken(PRODUCT_ID, MANUFACTURER_NAME, PRODUCT_REFERENCE_NUMBER, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRICE_IN_DOLLARS, PRODUCT_LENGTH, PRODUCT_HEIGHT, PRODUCT_WIDTH, PRODUCT_STYLE, PRODUCT_COLOR, PRODUCT_URL, PICTURE_URL_ARR));
+                ProductToken product = new ProductToken(PRODUCT_ID, MANUFACTURER_NAME, PRODUCT_REFERENCE_NUMBER, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRICE_IN_DOLLARS, PRODUCT_LENGTH, PRODUCT_HEIGHT, PRODUCT_WIDTH, PRODUCT_STYLE, PRODUCT_COLOR, PRODUCT_URL, PICTURE_URL_ARR);
                 product_arr.add(product);
             }
         }
@@ -106,6 +111,7 @@ public class Request_HM {
 
 
         // Add product_arr product tokens to database
+        PROCESSING_INTERFACE.insertProductToken(product_arr);
     }
 
     public static void main(String[] args) {
