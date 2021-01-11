@@ -42,7 +42,8 @@ public class ClothingDataAccessService {
                     rs.getString("product_width"),
                     rs.getString("product_style"),
                     rs.getString("product_color"),
-                    rs.getString("product_url")
+                    rs.getString("product_url"),
+                    (String[]) (rs.getArray("picture_url_arr")).getArray()
                 );
             }
         });
@@ -143,5 +144,11 @@ public class ClothingDataAccessService {
                 return rs.getString("manufacturer_name");
             }
         });
+    }
+
+
+
+    public int insertNewProduct(String sql) {
+        return jdbcTemplate.update(sql);
     }
 }

@@ -10,6 +10,7 @@
 
 package com.example.clothing;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessService;
@@ -208,5 +209,29 @@ public class ProcessingInterface {
         List<PersonalityToken> res =  PERSONALITY_DATA_ACCESS_SERVICE.getPersonalityStrength(sql);
 
         return res;
+    }
+
+
+
+
+
+
+
+    public int insertProductToken(ArrayList<ProductToken> product_arr) {
+        int product_arr_size = product_arr.size();
+        if(product_arr_size == 0) {
+            System.out.println("No products found");
+            return 0;
+        }
+
+        int count = 0;
+
+        for(int i = 0; i < product_arr_size; i++) {
+            ProductToken temp = product_arr.get(i);
+            String sql = "INSERT INTO product(product_id, manufacturer_name, product_reference_number, product_name, product_description, price_in_dollars, product_length, product_height, product_width, product_style, product_color, product_url) VALUES ('" + temp.PRODUCT_ID + "', '" + temp.MANUFACTURER_NAME + "', '" + temp.PRODUCT_REFERENCE_NUMBER + "', '" + temp.PRODUCT_NAME + "', '" + temp.PRODUCT_DESCRIPTION + "', " + temp.PRICE_IN_DOLLARS + ", '" + temp.PRODUCT_LENGTH + "', '" + temp.PRODUCT_HEIGHT + "', '" + temp.PRODUCT_WIDTH + "', '" + temp.PRODUCT_STYLE + "', '" + temp.PRODUCT_COLOR + "', '" + temp.PRODUCT_URL + "')";
+            count += CLOTHING_DATA_ACCESS_SERVICE.insertNewProduct(sql);
+        }
+
+        return count;
     }
 }

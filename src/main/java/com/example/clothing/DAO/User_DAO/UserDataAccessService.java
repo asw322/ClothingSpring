@@ -132,7 +132,8 @@ public class UserDataAccessService {
                     rs.getString("product_width"),
                     rs.getString("product_style"),
                     rs.getString("product_color"),
-                    rs.getString("product_url")
+                    rs.getString("product_url"),
+                    (String[]) (rs.getArray("picture_url_arr")).getArray()
                 );
             }
         });
@@ -158,7 +159,8 @@ public class UserDataAccessService {
                     rs.getString("product_width"),
                     rs.getString("product_style"),
                     rs.getString("product_color"),
-                    rs.getString("product_url")
+                    rs.getString("product_url"),
+                    (String[]) (rs.getArray("picture_url_arr")).getArray()
                 );
 
                 Object[] res = {temp, rs.getString("wear_count")};
@@ -200,11 +202,6 @@ public class UserDataAccessService {
     /**
      * Inserting a user user into the person table
      */
-    // public void insertNewUser(UserToken user) {
-    //     final String sql = "INSERT INTO person (id, name, hashedpassword) VALUES (?, ?, ?)";
-    //     jdbcTemplate.update(sql, user.ID, user.USERNAME, user.HASHEDPASSWORD);
-    //     System.out.println("Insertion successful");
-    // }
 
     public int insertNewUser(String sql) {        
         return jdbcTemplate.update(sql);
