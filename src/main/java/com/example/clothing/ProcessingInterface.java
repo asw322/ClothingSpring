@@ -212,7 +212,13 @@ public class ProcessingInterface {
     }
 
 
+    public String getHighestProductID() {
+        String sql = "SELECT MAX(product_id) AS largestPID FROM product";
+        List<String> res = CLOTHING_DATA_ACCESS_SERVICE.getHighestPID(sql);
 
+        int curr_highest = Integer.parseInt(res.get(0).substring(1));
+        return "P" + (curr_highest + 1);
+    }
 
 
 
@@ -224,14 +230,28 @@ public class ProcessingInterface {
             return 0;
         }
 
-        int count = 0;
+        int product_insertion_count = 0;
 
+        // Inserting into product
         for(int i = 0; i < product_arr_size; i++) {
             ProductToken temp = product_arr.get(i);
             String sql = "INSERT INTO product(product_id, manufacturer_name, product_reference_number, product_name, product_description, price_in_dollars, product_length, product_height, product_width, product_style, product_color, product_url) VALUES ('" + temp.PRODUCT_ID + "', '" + temp.MANUFACTURER_NAME + "', '" + temp.PRODUCT_REFERENCE_NUMBER + "', '" + temp.PRODUCT_NAME + "', '" + temp.PRODUCT_DESCRIPTION + "', " + temp.PRICE_IN_DOLLARS + ", '" + temp.PRODUCT_LENGTH + "', '" + temp.PRODUCT_HEIGHT + "', '" + temp.PRODUCT_WIDTH + "', '" + temp.PRODUCT_STYLE + "', '" + temp.PRODUCT_COLOR + "', '" + temp.PRODUCT_URL + "')";
-            count += CLOTHING_DATA_ACCESS_SERVICE.insertNewProduct(sql);
-        }
+            product_insertion_count += CLOTHING_DATA_ACCESS_SERVICE.executeUpdate(sql);
 
-        return count;
+
+            // Inserting into product image
+            int product_image_insertion_count = 0;
+            int picture_url_arr_size = temp.PICTURE_URL_ARR.size();
+            for(int j = 0; j < picture_url_arr_size; j++) {
+                String sql2 = "INSERT INTO product_image(product_id, product_image) VALUES ('" + temp.PRODUCT_ID + "', '" + temp.PICTURE_URL_ARR.get(j) + "')";
+                product_image_insertion_count += CLOTHING_DATA_ACCESS_SERVICE.executeUpdate(sql2);
+            }
+
+            if(product_image_insertion_count == picture_url_arr_size) {
+                System.out.println("Images insertion completed");
+            }
+        }        
+
+        return product_insertion_count;
     }
 }

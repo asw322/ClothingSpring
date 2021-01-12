@@ -2,6 +2,8 @@ package com.example.clothing;
 
 import java.util.*;
 
+import com.example.clothing.NetworkRequest.Request_HM;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,9 +22,7 @@ public class ClohingSpringApplication {
 	@Autowired
 	private static Input INPUT;
 
-	public static void main(String[] args) {
-		SpringApplication.run(ClohingSpringApplication.class, args);		
-
+	private static void processor() {
 		// Instantiate Scanner
 		INPUT = CONTEXT.getBean(Input.class);
 
@@ -64,5 +64,20 @@ public class ClohingSpringApplication {
 			// CLIENT.showPortfolio();
 		// }
 		// System.out.println("hello");
+	}
+
+
+	private static void insertHM() {
+		Request_HM hmObj = new Request_HM();
+		// hmObj.parseData();
+		hmObj.tester();
+	}
+
+
+	public static void main(String[] args) {
+		SpringApplication.run(ClohingSpringApplication.class, args);		
+
+		processor();
+		// insertHM();
 	}
 }

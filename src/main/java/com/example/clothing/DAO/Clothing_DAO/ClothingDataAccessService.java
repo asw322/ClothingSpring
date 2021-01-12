@@ -43,7 +43,7 @@ public class ClothingDataAccessService {
                     rs.getString("product_style"),
                     rs.getString("product_color"),
                     rs.getString("product_url"),
-                    (String[]) (rs.getArray("picture_url_arr")).getArray()
+                    null                            // Still need to retrieve picture images 
                 );
             }
         });
@@ -147,8 +147,19 @@ public class ClothingDataAccessService {
     }
 
 
+    public List<String> getHighestPID(String sql) {
+        return jdbcTemplate.query(sql, new RowMapper<String>() {
 
-    public int insertNewProduct(String sql) {
+            @Override
+            public String mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                return rs.getString("product_id");
+            }
+        });
+    }
+
+
+
+    public int executeUpdate(String sql) {
         return jdbcTemplate.update(sql);
     }
 }

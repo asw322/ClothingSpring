@@ -1,5 +1,6 @@
 package com.example.clothing;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.stereotype.Component;
@@ -19,7 +20,7 @@ public class ProductToken {
     public String PRODUCT_COLOR;
     public String PRODUCT_URL;
 
-    public String[] PICTURE_URL_ARR;
+    public ArrayList<String> PICTURE_URL_ARR;
 
     public ProductToken() {
 
@@ -38,7 +39,7 @@ public class ProductToken {
         String _PRODUCT_STYLE, 
         String _PRODUCT_COLOR, 
         String _PRODUCT_URL,
-        String[] _PICTURE_URL_ARR) {
+        ArrayList<String> _PICTURE_URL_ARR) {
             PRODUCT_ID = _PRODUCT_ID;
             MANUFACTURER_NAME = _MANUFACTURER_NAME;
             PRODUCT_REFERENCE_NUMBER = _PRODUCT_REFERENCE_NUMBER;
@@ -67,7 +68,7 @@ public class ProductToken {
         String _PRODUCT_STYLE, 
         String _PRODUCT_COLOR, 
         String _PRODUCT_URL,
-        String[] _PICTURE_URL_ARR) {
+        ArrayList<String> _PICTURE_URL_ARR) {
             PRODUCT_ID = _PRODUCT_ID;
             MANUFACTURER_NAME = _MANUFACTURER_NAME;
             PRODUCT_REFERENCE_NUMBER = _PRODUCT_REFERENCE_NUMBER;
@@ -103,6 +104,6 @@ public class ProductToken {
         System.out.println("Style: " + PRODUCT_STYLE);
         System.out.println("Color: " + PRODUCT_COLOR);
         System.out.println("URL: " + PRODUCT_URL);
-        System.out.println("PICTURE URL: " + Arrays.toString(PICTURE_URL_ARR));
+        System.out.println("PICTURE URL: " + PICTURE_URL_ARR);
     }
 }

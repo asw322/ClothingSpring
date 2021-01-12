@@ -133,7 +133,7 @@ public class UserDataAccessService {
                     rs.getString("product_style"),
                     rs.getString("product_color"),
                     rs.getString("product_url"),
-                    (String[]) (rs.getArray("picture_url_arr")).getArray()
+                    null
                 );
             }
         });
@@ -160,7 +160,7 @@ public class UserDataAccessService {
                     rs.getString("product_style"),
                     rs.getString("product_color"),
                     rs.getString("product_url"),
-                    (String[]) (rs.getArray("picture_url_arr")).getArray()
+                    null
                 );
 
                 Object[] res = {temp, rs.getString("wear_count")};

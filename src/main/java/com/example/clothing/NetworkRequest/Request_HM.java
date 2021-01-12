@@ -14,6 +14,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.FileReader;
 
@@ -22,15 +23,15 @@ import java.io.FileReader;
 // import com.example.clothing.DAO.User_DAO.UserDataAccessService;
 
 
-
+@Component
 public class Request_HM {
 
     private static final String path = "/Users/alan/Desktop/Project/ClothingSpring/src/main/resources/data/HM/HM_data.json";
 
     @Autowired
-    private static ProcessingInterface PROCESSING_INTERFACE;
+    private ProcessingInterface PROCESSING_INTERFACE = new ProcessingInterface();
     
-    private static void fetchData(FileWriter fw) {
+    public void fetchData(FileWriter fw) {
         // Outputting Response to json object
         try {
             fw = new FileWriter(path);
@@ -69,7 +70,11 @@ public class Request_HM {
         }
     }
 
-    private static void parseData() {
+    public void tester() {
+        PROCESSING_INTERFACE.userLogin("test", "test");
+    }
+
+    public void parseData() {
         ArrayList<ProductToken> product_arr = new ArrayList<>();
 
         try {
@@ -79,9 +84,11 @@ public class Request_HM {
 
             for(int i = 0; i < res.size(); i++) {
                 JSONObject tempClothing = (JSONObject) res.get(i);
-                String PRODUCT_ID = (String) tempClothing.get("code");
+
+
+                String PRODUCT_ID = PROCESSING_INTERFACE.getHighestProductID();      // Need to query for the highest PID
                 String MANUFACTURER_NAME = "HM";
-                String PRODUCT_REFERENCE_NUMBER = "HM_" + (String) tempClothing.get("pk");
+                String PRODUCT_REFERENCE_NUMBER = "HM_" + (String) tempClothing.get("code");
                 String PRODUCT_NAME = (String) tempClothing.get("name");
                 String PRODUCT_DESCRIPTION = null;
                 double PRICE_IN_DOLLARS = (Double) ((JSONObject) tempClothing.get("price")).get("value");
@@ -89,7 +96,10 @@ public class Request_HM {
                 String PRODUCT_HEIGHT = null;
                 String PRODUCT_WIDTH = null;
                 String PRODUCT_STYLE = null;       // Might be able to get this from JSON?
-                String PRODUCT_COLOR = (String) ((JSONObject) tempClothing.get("color")).get("text");
+
+                String PRODUCT_COLOR = "sample color";
+
+                // String PRODUCT_COLOR = (String) ((JSONObject) tempClothing.get("color")).get("text");
                 String PRODUCT_URL = null;         // Might be able to get this from JSON?
 
                 /**
@@ -97,9 +107,20 @@ public class Request_HM {
                  * Might have to check if all other products follow the same format?
                  * Solution: try to print out the URLS for every product to terminal first? 
                  */
-                String[] PICTURE_URL_ARR = null;   // WORK FROM HERE
+                ArrayList<String> PICTURE_URL_ARR = new ArrayList<>();
+
+                JSONArray imageArr = (JSONArray) tempClothing.get("images");
+                JSONObject imageObj = (JSONObject) imageArr.get(0);
+                String imageUrl = (String) imageObj.get("url");
+                PICTURE_URL_ARR.add(imageUrl);
+
+
+                JSONArray logoPicture = (JSONArray) tempClothing.get("articles");
+                JSONObject logoPictureObj = (JSONObject) logoPicture.get(0);
+                String logoPictureUrl = (String) logoPictureObj.get("url");
+                PICTURE_URL_ARR.add(logoPictureUrl);
+
                 
-                // System.out.println("" + PRICE_IN_DOLLARS);
                 ProductToken product = new ProductToken(PRODUCT_ID, MANUFACTURER_NAME, PRODUCT_REFERENCE_NUMBER, PRODUCT_NAME, PRODUCT_DESCRIPTION, PRICE_IN_DOLLARS, PRODUCT_LENGTH, PRODUCT_HEIGHT, PRODUCT_WIDTH, PRODUCT_STYLE, PRODUCT_COLOR, PRODUCT_URL, PICTURE_URL_ARR);
                 product_arr.add(product);
             }
@@ -108,16 +129,21 @@ public class Request_HM {
             e.printStackTrace();
         }
 
-
+        // Printing for testing
+        for(int i = 0; i < product_arr.size(); i++) {
+            product_arr.get(i).printProductToken();
+        }
 
         // Add product_arr product tokens to database
-        PROCESSING_INTERFACE.insertProductToken(product_arr);
+        // PROCESSING_INTERFACE.insertProductToken(product_arr);
     }
 
     public static void main(String[] args) {
         FileWriter fw = null; 
 
+        // PROCESSING_INTERFACE = new ProcessingInterface();
+
         // fetchData(fw);      // Sets up all the data (Warning: will rewrite HM_data.json)
-        parseData();        // Parses all the data
+        // parseData();        // Parses all the data
     }
 }

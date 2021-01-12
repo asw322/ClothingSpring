@@ -2,6 +2,8 @@ package com.example.clothing;
 
 import java.util.ArrayList;
 
+import com.example.clothing.NetworkRequest.Request_HM;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,9 +14,13 @@ class ClohingSpringApplicationTests {
 	@Autowired
 	private ProcessingInterface PROCESSING_INTERFACE;
 
+
+
 	@Test
 	void contextLoads() {
-		testInsertProductTokens();
+		// testInsertProductTokens();
+		// Request_HM processor = new Request_HM();
+		// processor.parseData();
 	}
 
 	void testInsertProductTokens() {
