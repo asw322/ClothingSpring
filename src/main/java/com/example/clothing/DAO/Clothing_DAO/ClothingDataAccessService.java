@@ -56,6 +56,7 @@ public class ClothingDataAccessService {
      * @param sql
      * @return
      */
+    // Test: this might not work since product_id are in the form 'P#'
     public List<Integer> getProductIDOnProductName(String sql) {
         return jdbcTemplate.query(sql, new RowMapper<Integer>() {
 

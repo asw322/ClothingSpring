@@ -140,6 +140,8 @@ public class ProcessingInterface {
      *      2. Name
      *      3. Reference #
      *      4. Product ID
+     * 
+     * We need to check duplicate cases for (URL, Name, Reference #) since they are not primary keys and non unique
      */
     public void addNewClosetItem(String PRODUCT_INFO, int ACTION_PARAMETER, UserToken USERTOKEN) {
 
@@ -149,22 +151,114 @@ public class ProcessingInterface {
         }
         // URL case
         else if(ACTION_PARAMETER == 1) {
-            String sql = "";
-            CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_URL.executeUpdate(sql);
+            // Query for the product ID
+            String getsql = "SELECT * FROM product WHERE product_url = '" + PRODUCT_INFO + "'";
+            List<ProductToken> res = CLOTHING_DATA_ACCESS_SERVICE.getProductDetail(getsql);
+            int res_size = res.size();
+
+            // Product url is incorrect
+            if(res_size == 0) {
+                System.out.println(STANDARD_ERROR + "\nProduct URL invalid");
+                return;
+            }
+            // Only one product with the product url
+            else if(res_size == 1) {
+                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(0).PRODUCT_ID + "', " + 0 + ")";
+                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_URL.executeUpdate(sql);
+                return;
+            }
+            // There exists duplicates with the product url (need to ask client which product)
+            else if(res_size > 1) {
+                System.out.println("Found multiple products, showing all: ");
+                for(int i = 0; i < res_size; i++) {
+                    System.out.println("Number: " + (i+1));
+                    res.get(i).printProductToken();
+                }
+
+                int user_choice = Integer.parseInt(INPUT.getRobustInput("Choose a product: "));
+                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(user_choice-1).PRODUCT_ID + "', " + 0 + ")";
+                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_URL.executeUpdate(sql);
+                return;
+            }
         }
         // Name case
-        else if(ACTION_PARAMETER == 2) {
-            String sql = "";
-            CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_NAME.executeUpdate(sql);
+        else if(ACTION_PARAMETER == 2) {            
+            // Query for the product ID
+            String getsql = "SELECT * FROM product WHERE product_name = '" + PRODUCT_INFO + "'";
+            List<ProductToken> res = CLOTHING_DATA_ACCESS_SERVICE.getProductDetail(getsql);
+            int res_size = res.size();
+
+            // Product name is incorrect
+            if(res_size == 0) {
+                System.out.println(STANDARD_ERROR + "\nProduct name invalid");
+                return;
+            }
+            // Only one product with the product name
+            else if(res_size == 1) {
+                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(0).PRODUCT_ID + "', " + 0 + ")";
+                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_NAME.executeUpdate(sql);
+                return;
+            }
+            // There exists duplicates with the product name (need to ask client which product)
+            else if(res_size > 1) {
+                System.out.println("Found multiple products, showing all: ");
+                for(int i = 0; i < res_size; i++) {
+                    System.out.println("Number: " + (i+1));
+                    res.get(i).printProductToken();
+                }
+
+                int user_choice = Integer.parseInt(INPUT.getRobustInput("Choose a product: "));
+                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(user_choice-1).PRODUCT_ID + "', " + 0 + ")";
+                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_NAME.executeUpdate(sql);
+                return;
+            }
         }
         // Reference # case
         else if(ACTION_PARAMETER == 3) {
-            String sql = "";
-            CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_REFERENCE_NUMBER.executeUpdate(sql);
+            // Query for the product ID
+            String getsql = "SELECT * FROM product WHERE product_reference_number = '" + PRODUCT_INFO + "'";
+            List<ProductToken> res = CLOTHING_DATA_ACCESS_SERVICE.getProductDetail(getsql);
+            int res_size = res.size();
+
+            // Product reference number is incorrect
+            if(res_size == 0) {
+                System.out.println(STANDARD_ERROR + "\nProduct reference number invalid");
+                return;
+            }
+            // Only one product with the product reference number
+            else if(res_size == 1) {
+                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(0).PRODUCT_ID + ", " + 0 + ")";
+                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_REFERENCE_NUMBER.executeUpdate(sql);
+                return;
+            }
+            // There exists duplicates with the product name (need to ask client which product)
+            else if(res_size > 1) {
+                System.out.println("Found multiple products, showing all: ");
+                for(int i = 0; i < res_size; i++) {
+                    System.out.println("Number: " + (i+1));
+                    res.get(i).printProductToken();
+                }
+
+                int user_choice = Integer.parseInt(INPUT.getRobustInput("Choose a product: "));
+                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(user_choice-1).PRODUCT_ID + "', " + 0 + ")";
+                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_REFERENCE_NUMBER.executeUpdate(sql);
+                return;
+            }
         }
         // ID case
         else if(ACTION_PARAMETER == 4) {
-            String sql = "INSERT INTO CLOSET (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + PRODUCT_INFO + "', " + 0 + ")";
+            // Query for the product ID 
+            String getsql = "SELECT * FROM product WHERE product_id = '" + PRODUCT_INFO + "'";
+            List<ProductToken> res = CLOTHING_DATA_ACCESS_SERVICE.getProductDetail(getsql);
+            int res_size = res.size();
+
+            // Product id is incorrect
+            if(res_size == 0) {
+                System.out.println(STANDARD_ERROR + "\nProduct id");
+                return;
+            }
+
+            String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + PRODUCT_INFO + "', " + 0 + ")";
             CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_ID.executeUpdate(sql);
         }
     }
