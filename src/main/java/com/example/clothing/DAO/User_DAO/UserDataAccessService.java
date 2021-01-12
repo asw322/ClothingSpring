@@ -16,6 +16,7 @@ import java.util.*;
 
 import com.example.clothing.ProductToken;
 import com.example.clothing.UserToken;
+import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -31,6 +32,9 @@ public class UserDataAccessService {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private ClothingDataAccessService CLOTHING_DATA_ACCESS_SERVICE;
 
     private ProductToken productToken;
 

@@ -236,11 +236,44 @@ public class ClientInterface {
 
         String modified;
 
-        modified = INPUT.getRobustInput("Enter New Sex");
+        modified = INPUT.getRobustInput("Enter New Sex: ");
 
         String sql = "";
 
         // UPDATE the sex parameter
+    }
+
+
+    public void addClothing() {
+        printHeader("Add New Clothes");
+
+        String product_info = null;
+
+        String action = INPUT.getRobustInput("1. Enter URL\n2. Enter Name\n3. Enter reference number\n4. Enter product id\nEnter: ");
+        int action_parameter = 0;
+        switch (action) {
+            case "1":
+                product_info = INPUT.getRobustInput("Please enter the URL of the product\nEnter: ");
+                action_parameter = 1;
+                break;
+            case "2": 
+                product_info = INPUT.getRobustInput("Please enter the entire name of the product\nEnter: ");
+                action_parameter = 2;
+                break;
+            case "3": 
+                product_info = INPUT.getRobustInput("Please enter the reference number of the product\nEnter: ");
+                action_parameter = 3;
+                break;
+            case "4": 
+                product_info = INPUT.getRobustInput("Please enter the ID (db version) of the product\nEnter: ");
+                action_parameter = 4;
+                break;
+            default: 
+                System.out.println("Invalid option\n");
+                break;
+        }
+
+        PROCESSING_INTERFACE.addNewClosetItem(product_info, action_parameter, USERTOKEN);
     }
 
 

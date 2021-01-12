@@ -24,4 +24,8 @@ public class ClothingDataAccessServiceOnProductURL {
     public ClothingDataAccessServiceOnProductURL() {
         // Empty
     }
+
+    public int executeUpdate(String sql) {
+        return jdbcTemplate.update(sql);
+    }
 }

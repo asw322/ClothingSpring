@@ -24,4 +24,8 @@ public class ClothingDataAccessServiceOnProductReferenceNumber {
     public ClothingDataAccessServiceOnProductReferenceNumber() {
         // Empty
     }
+
+    public int executeUpdate(String sql) {
+        return jdbcTemplate.update(sql);
+    }
 }

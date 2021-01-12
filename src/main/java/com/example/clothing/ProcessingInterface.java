@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessService;
+import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessServiceOnProductID;
+import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessServiceOnProductName;
+import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessServiceOnProductReferenceNumber;
+import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessServiceOnProductURL;
 import com.example.clothing.DAO.Personality_DAO.PersonalityDataAccessService;
 import com.example.clothing.DAO.User_DAO.UserDataAccessService;
 
@@ -30,6 +34,18 @@ public class ProcessingInterface {
 
     @Autowired
     private ClothingDataAccessService CLOTHING_DATA_ACCESS_SERVICE;
+
+    @Autowired
+    private ClothingDataAccessServiceOnProductID CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_ID;
+
+    @Autowired
+    private ClothingDataAccessServiceOnProductName CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_NAME;
+
+    @Autowired
+    private ClothingDataAccessServiceOnProductReferenceNumber CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_REFERENCE_NUMBER;
+
+    @Autowired
+    private ClothingDataAccessServiceOnProductURL CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_URL;
 
     @Autowired
     private PersonalityDataAccessService PERSONALITY_DATA_ACCESS_SERVICE;
@@ -117,7 +133,41 @@ public class ProcessingInterface {
     }
 
 
+    /**
+     * @param PRODUCT_INFO
+     * @param ACTION_PARAMETER
+     *      1. URL
+     *      2. Name
+     *      3. Reference #
+     *      4. Product ID
+     */
+    public void addNewClosetItem(String PRODUCT_INFO, int ACTION_PARAMETER, UserToken USERTOKEN) {
 
+        // Invalid option was selected
+        if(ACTION_PARAMETER == 0) {
+            return;
+        }
+        // URL case
+        else if(ACTION_PARAMETER == 1) {
+            String sql = "";
+            CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_URL.executeUpdate(sql);
+        }
+        // Name case
+        else if(ACTION_PARAMETER == 2) {
+            String sql = "";
+            CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_NAME.executeUpdate(sql);
+        }
+        // Reference # case
+        else if(ACTION_PARAMETER == 3) {
+            String sql = "";
+            CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_REFERENCE_NUMBER.executeUpdate(sql);
+        }
+        // ID case
+        else if(ACTION_PARAMETER == 4) {
+            String sql = "INSERT INTO CLOSET (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + PRODUCT_INFO + "', " + 0 + ")";
+            CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_ID.executeUpdate(sql);
+        }
+    }
 
 
 
