@@ -11,6 +11,10 @@ import java.util.*;
 import com.example.clothing.DAO.Personality_DAO.PersonalityDataAccessService;
 import com.example.clothing.DAO.User_DAO.UserDataAccessService;
 import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessService;
+import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessServiceOnProductID;
+import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessServiceOnProductName;
+import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessServiceOnProductReferenceNumber;
+import com.example.clothing.DAO.Clothing_DAO.ClothingDataAccessServiceOnProductURL;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -78,6 +82,29 @@ public class AppConfig {
         return new ClothingDataAccessService();
     }
 
+    @Bean
+    @Primary
+    public ClothingDataAccessServiceOnProductID getClothingDataAccessServiceOnProductID() {
+        return new ClothingDataAccessServiceOnProductID();
+    }
+
+    @Bean
+    @Primary
+    public ClothingDataAccessServiceOnProductReferenceNumber getClothingDataAccessServiceOnProductReferenceNumber() {
+        return new ClothingDataAccessServiceOnProductReferenceNumber();
+    }
+
+    @Bean
+    @Primary
+    public ClothingDataAccessServiceOnProductName getClothingDataAccessServiceOnProductName() {
+        return new ClothingDataAccessServiceOnProductName();
+    }
+
+    @Bean
+    @Primary
+    public ClothingDataAccessServiceOnProductURL getClothingDataAccessServiceOnProductURL() {
+        return new ClothingDataAccessServiceOnProductURL();
+    }
 
     @Bean
     @Primary
