@@ -68,7 +68,7 @@ public class UserDataAccessService {
             public UserToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
                 System.out.println("Setting up new user!");
                 UserToken temp = new UserToken();
-                temp.setLogin(rs.getString("name"), rs.getString("hashedpassword"), rs.getString("id"));
+                temp.setLogin(rs.getString("name"), rs.getString("hashedpassword"), rs.getInt("id"));
                 return temp;
             }
         });
@@ -86,7 +86,7 @@ public class UserDataAccessService {
             @Override
             public UserToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
                 UserToken temp = new UserToken();
-                temp.setLogin(rs.getString("name"), rs.getString("hashedpassword"), rs.getString("id"));
+                temp.setLogin(rs.getString("name"), rs.getString("hashedpassword"), rs.getInt("id"));
                 return temp;
             }
         });
@@ -103,7 +103,7 @@ public class UserDataAccessService {
                 @Override
                 public UserToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
                     UserToken temp = new UserToken();
-                    temp.setLogin(rs.getString("name"), rs.getString("hashedpassword"), rs.getString("id"));
+                    temp.setLogin(rs.getString("name"), rs.getString("hashedpassword"), rs.getInt("id"));
                     return temp;
                 }
             }
@@ -230,7 +230,16 @@ public class UserDataAccessService {
      * Inserting a user user into the person table
      */
 
-    public int insertNewUser(String sql) {        
-        return jdbcTemplate.update(sql);
+    // public int insertNewUser(String sql) {        
+    //     return jdbcTemplate.update(sql);
+    // }
+    public int insertNewUser(String sql, int id, String username, String hashedpassword) {
+        return namedJdbcTemplate.update(
+            sql, 
+            new MapSqlParameterSource()
+                .addValue("id", id)
+                .addValue("username", username)
+                .addValue("hashedpassword", hashedpassword)
+        );
     }
 }

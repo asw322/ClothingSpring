@@ -28,7 +28,7 @@ public class AccessControl {
     private String NAME;
     private String BIRTHDATE;
     private String SEX;
-    private String ID;
+    private int ID;
 
     @Autowired
     public AccessControl() {
@@ -147,7 +147,7 @@ public class AccessControl {
      * @param _SEX
      * @param _ID
      */
-    private void createUserToken(String _USERNAME, String _HASHEDPASSWORD, String _NAME, String _BIRTHDATE, String _SEX, String _ID) {
+    private void createUserToken(String _USERNAME, String _HASHEDPASSWORD, String _NAME, String _BIRTHDATE, String _SEX, int _ID) {
         // Handle SEX parameter
         // Handle BIRTHDATE parameter
         String preprocessed_sex = this.checkSex(_SEX);

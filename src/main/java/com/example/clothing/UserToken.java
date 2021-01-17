@@ -10,7 +10,7 @@ public class UserToken {
     public String NAME;
     public String BIRTHDATE;
     public String SEX;
-    public String ID;
+    public int ID;
 
     /**
      * 
@@ -21,7 +21,7 @@ public class UserToken {
      * @param _SEX
      * @param _ID
      */
-    public void setAll(String _USERNAME, String _HASHEDPASSWORD, String _NAME, String _BIRTHDATE, String _SEX, String _ID) {
+    public void setAll(String _USERNAME, String _HASHEDPASSWORD, String _NAME, String _BIRTHDATE, String _SEX, int _ID) {
         USERNAME = _USERNAME;
         HASHEDPASSWORD = _HASHEDPASSWORD;
         NAME = _NAME;
@@ -30,7 +30,7 @@ public class UserToken {
         ID = _ID;
     }
 
-    public void setLogin(String _USERNAME, String _HASHEDPASSWORD, String _ID) {
+    public void setLogin(String _USERNAME, String _HASHEDPASSWORD, int _ID) {
         USERNAME = _USERNAME;
         HASHEDPASSWORD = _HASHEDPASSWORD;
         ID = _ID;
