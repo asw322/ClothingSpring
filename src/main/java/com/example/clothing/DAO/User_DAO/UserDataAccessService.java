@@ -23,6 +23,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 @Component
 public class UserDataAccessService {
@@ -32,6 +34,9 @@ public class UserDataAccessService {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private NamedParameterJdbcTemplate namedJdbcTemplate;
 
     @Autowired
     private ClothingDataAccessService CLOTHING_DATA_ACCESS_SERVICE;
@@ -85,6 +90,24 @@ public class UserDataAccessService {
                 return temp;
             }
         });
+    }
+
+    public List<UserToken> getUserData(String sql, String name, String hashedpassword) {
+        return namedJdbcTemplate.query(
+            sql,
+            new MapSqlParameterSource()
+                .addValue("name", name)
+                .addValue("hashedpassword", hashedpassword),
+            new RowMapper<UserToken>() {
+
+                @Override
+                public UserToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                    UserToken temp = new UserToken();
+                    temp.setLogin(rs.getString("name"), rs.getString("hashedpassword"), rs.getString("id"));
+                    return temp;
+                }
+            }
+        );
     }
 
     /**

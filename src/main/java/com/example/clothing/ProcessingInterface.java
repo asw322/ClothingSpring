@@ -74,8 +74,8 @@ public class ProcessingInterface {
      * @return
      */
     public UserToken userLogin(String USERNAME, String HASHEDPASSWORD) {
-        String sql = "SELECT * FROM person WHERE name = '" + USERNAME + "' AND hashedpassword = '" + HASHEDPASSWORD + "'";
-        List<UserToken> res = USER_DATA_ACCESS_SERVICE.getUserData(sql);
+        String sql = "SELECT * FROM person WHERE name=:name AND hashedpassword=:hashedpassword";
+        List<UserToken> res = USER_DATA_ACCESS_SERVICE.getUserData(sql, USERNAME, HASHEDPASSWORD);
 
         // Check to make sure list only contains 1 account 
         if(res.size() == 1) {
@@ -95,7 +95,7 @@ public class ProcessingInterface {
      * @return
      */
     public UserToken createAccount(UserToken USERTOKEN) {
-        String sql = "INSERT INTO person (id, name, hashedpassword) VALUES ('" + USERTOKEN.ID + "', '" + USERTOKEN.USERNAME + "', '" + USERTOKEN.HASHEDPASSWORD + "')";
+        String sql = "INSERT INTO user_data (id, username, hashedpassword, dob, sex) VALUES ('" + USERTOKEN.ID + "', '" + USERTOKEN.USERNAME + "', '" + USERTOKEN.HASHEDPASSWORD + "', '" + null + "', '')";
         int rowsAffected = USER_DATA_ACCESS_SERVICE.insertNewUser(sql);
 
         if(rowsAffected == 1) {
