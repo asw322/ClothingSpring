@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserToken {
+    // public data fields
     public String USERNAME;
     public String HASHEDPASSWORD;
     public String NAME;
