@@ -139,61 +139,69 @@ public class UserDataAccessService {
      * @param sql
      * @return
      */
-    public List<ProductToken> getUserOwnedProductDetail(String sql) {
-        return jdbcTemplate.query(sql, new RowMapper<ProductToken>() {
+    public List<ProductToken> getUserOwnedProductDetail(String sql, int id) {
+        return namedJdbcTemplate.query(
+            sql, 
+            new MapSqlParameterSource()
+                .addValue("id", id),
+            new RowMapper<ProductToken>() {
             
-            @Override
-            public ProductToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                @Override
+                public ProductToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
 
-                // NOTEEEE: THIS IS A FUNCTIONALITY STOLEN FROM ClothingDataAccessService
-                // Figure out how to inline that function into here
-                return new ProductToken(
-                    rs.getString("product_id"),
-                    rs.getString("manufacturer_name"),
-                    rs.getString("product_reference_number"),
-                    rs.getString("product_name"),
-                    rs.getString("product_description"),
-                    rs.getDouble("price_in_dollars"),
-                    rs.getString("product_length"),
-                    rs.getString("product_height"),
-                    rs.getString("product_width"),
-                    rs.getString("product_style"),
-                    rs.getString("product_color"),
-                    rs.getString("product_url"),
-                    null
-                );
-            }
+                    // NOTEEEE: THIS IS A FUNCTIONALITY STOLEN FROM ClothingDataAccessService
+                    // Figure out how to inline that function into here
+                    return new ProductToken(
+                        rs.getString("product_id"),
+                        rs.getString("manufacturer_name"),
+                        rs.getString("product_reference_number"),
+                        rs.getString("product_name"),
+                        rs.getString("product_description"),
+                        rs.getDouble("price_in_dollars"),
+                        rs.getString("product_length"),
+                        rs.getString("product_height"),
+                        rs.getString("product_width"),
+                        rs.getString("product_style"),
+                        rs.getString("product_color"),
+                        rs.getString("product_url"),
+                        null
+                    );
+                }
         });
     }
 
 
     
-    public List<Object[]> getUserOwnedProductDetailWithWearCount(String sql) {
-        return jdbcTemplate.query(sql, new RowMapper<Object[]>() {
+    public List<Object[]> getUserOwnedProductDetailWithWearCount(String sql, int id) {
+        return namedJdbcTemplate.query(
+            sql, 
+            new MapSqlParameterSource()
+                .addValue("id", id),
+            new RowMapper<Object[]>() {
             
-            @Override
-            public Object[] mapRow(ResultSet rs, int rowNumber) throws SQLException {
+                @Override
+                public Object[] mapRow(ResultSet rs, int rowNumber) throws SQLException {
 
-                ProductToken temp = new ProductToken(
-                    rs.getString("product_id"),
-                    rs.getString("manufacturer_name"),
-                    rs.getString("product_reference_number"),
-                    rs.getString("product_name"),
-                    rs.getString("product_description"),
-                    rs.getDouble("price_in_dollars"),
-                    rs.getString("product_length"),
-                    rs.getString("product_height"),
-                    rs.getString("product_width"),
-                    rs.getString("product_style"),
-                    rs.getString("product_color"),
-                    rs.getString("product_url"),
-                    null
-                );
+                    ProductToken temp = new ProductToken(
+                        rs.getString("product_id"),
+                        rs.getString("manufacturer_name"),
+                        rs.getString("product_reference_number"),
+                        rs.getString("product_name"),
+                        rs.getString("product_description"),
+                        rs.getDouble("price_in_dollars"),
+                        rs.getString("product_length"),
+                        rs.getString("product_height"),
+                        rs.getString("product_width"),
+                        rs.getString("product_style"),
+                        rs.getString("product_color"),
+                        rs.getString("product_url"),
+                        null
+                    );
 
-                Object[] res = {temp, rs.getString("wear_count")};
+                    Object[] res = {temp, rs.getString("wear_count")};
 
-                return res;
-            }
+                    return res;
+                }
         });
     }
 

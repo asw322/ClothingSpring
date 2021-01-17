@@ -153,8 +153,9 @@ public class ProcessingInterface {
         // URL case
         else if(ACTION_PARAMETER == 1) {
             // Query for the product ID
-            String getsql = "SELECT * FROM product WHERE product_url = '" + PRODUCT_INFO + "'";
-            List<ProductToken> res = CLOTHING_DATA_ACCESS_SERVICE.getProductDetail(getsql);
+            // String getsql = "SELECT * FROM product WHERE product_url = '" + PRODUCT_INFO + "'";
+            String getsql = "SELECT * FROM product WHERE product_url=:product_info";
+            List<ProductToken> res = CLOTHING_DATA_ACCESS_SERVICE.getProductDetail(getsql, PRODUCT_INFO);
             int res_size = res.size();
 
             // Product url is incorrect
@@ -164,8 +165,9 @@ public class ProcessingInterface {
             }
             // Only one product with the product url
             else if(res_size == 1) {
-                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(0).PRODUCT_ID + "', " + 0 + ")";
-                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_URL.executeUpdate(sql);
+                // String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(0).PRODUCT_ID + "', " + 0 + ")";
+                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES (:uid, :pid, 0)";
+                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_URL.executeUpdate(sql, USERTOKEN.ID, res.get(0).PRODUCT_ID);
                 return;
             }
             // There exists duplicates with the product url (need to ask client which product)
@@ -177,16 +179,18 @@ public class ProcessingInterface {
                 }
 
                 int user_choice = Integer.parseInt(INPUT.getRobustInput("Choose a product: "));
-                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(user_choice-1).PRODUCT_ID + "', " + 0 + ")";
-                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_URL.executeUpdate(sql);
+                // String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(user_choice-1).PRODUCT_ID + "', " + 0 + ")";
+                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES (:uid, :pid, 0)";
+                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_URL.executeUpdate(sql, USERTOKEN.ID, res.get(user_choice-1).PRODUCT_ID);
                 return;
             }
         }
         // Name case
         else if(ACTION_PARAMETER == 2) {            
             // Query for the product ID
-            String getsql = "SELECT * FROM product WHERE product_name = '" + PRODUCT_INFO + "'";
-            List<ProductToken> res = CLOTHING_DATA_ACCESS_SERVICE.getProductDetail(getsql);
+            // String getsql = "SELECT * FROM product WHERE product_name = '" + PRODUCT_INFO + "'";
+            String getsql = "SELECT * FROM product WHERE product_name=:product_info";
+            List<ProductToken> res = CLOTHING_DATA_ACCESS_SERVICE.getProductDetail(getsql, PRODUCT_INFO);
             int res_size = res.size();
 
             // Product name is incorrect
@@ -196,8 +200,9 @@ public class ProcessingInterface {
             }
             // Only one product with the product name
             else if(res_size == 1) {
-                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(0).PRODUCT_ID + "', " + 0 + ")";
-                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_NAME.executeUpdate(sql);
+                // String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(0).PRODUCT_ID + "', " + 0 + ")";
+                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES (:uid, :pid, 0)";
+                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_NAME.executeUpdate(sql, USERTOKEN.ID, res.get(0).PRODUCT_ID);
                 return;
             }
             // There exists duplicates with the product name (need to ask client which product)
@@ -209,16 +214,18 @@ public class ProcessingInterface {
                 }
 
                 int user_choice = Integer.parseInt(INPUT.getRobustInput("Choose a product: "));
-                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(user_choice-1).PRODUCT_ID + "', " + 0 + ")";
-                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_NAME.executeUpdate(sql);
+                // String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(user_choice-1).PRODUCT_ID + "', " + 0 + ")";
+                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES (:uid, :pid, 0)";
+                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_NAME.executeUpdate(sql, USERTOKEN.ID, res.get(user_choice-1).PRODUCT_ID);
                 return;
             }
         }
         // Reference # case
         else if(ACTION_PARAMETER == 3) {
             // Query for the product ID
-            String getsql = "SELECT * FROM product WHERE product_reference_number = '" + PRODUCT_INFO + "'";
-            List<ProductToken> res = CLOTHING_DATA_ACCESS_SERVICE.getProductDetail(getsql);
+            // String getsql = "SELECT * FROM product WHERE product_reference_number = '" + PRODUCT_INFO + "'";
+            String getsql = "SELECT * FROM product WHERE product_reference_number=:product_info";
+            List<ProductToken> res = CLOTHING_DATA_ACCESS_SERVICE.getProductDetail(getsql, PRODUCT_INFO);
             int res_size = res.size();
 
             // Product reference number is incorrect
@@ -228,8 +235,9 @@ public class ProcessingInterface {
             }
             // Only one product with the product reference number
             else if(res_size == 1) {
-                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(0).PRODUCT_ID + ", " + 0 + ")";
-                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_REFERENCE_NUMBER.executeUpdate(sql);
+                // String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(0).PRODUCT_ID + ", " + 0 + ")";
+                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES (:uid, :pid, 0)";
+                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_REFERENCE_NUMBER.executeUpdate(sql, USERTOKEN.ID, res.get(0).PRODUCT_ID);
                 return;
             }
             // There exists duplicates with the product name (need to ask client which product)
@@ -241,16 +249,18 @@ public class ProcessingInterface {
                 }
 
                 int user_choice = Integer.parseInt(INPUT.getRobustInput("Choose a product: "));
-                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(user_choice-1).PRODUCT_ID + "', " + 0 + ")";
-                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_REFERENCE_NUMBER.executeUpdate(sql);
+                // String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + res.get(user_choice-1).PRODUCT_ID + "', " + 0 + ")";
+                String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES (:uid, :pid, 0)";
+                CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_REFERENCE_NUMBER.executeUpdate(sql, USERTOKEN.ID, res.get(user_choice-1).PRODUCT_ID);
                 return;
             }
         }
         // ID case
         else if(ACTION_PARAMETER == 4) {
             // Query for the product ID 
-            String getsql = "SELECT * FROM product WHERE product_id = '" + PRODUCT_INFO + "'";
-            List<ProductToken> res = CLOTHING_DATA_ACCESS_SERVICE.getProductDetail(getsql);
+            // String getsql = "SELECT * FROM product WHERE product_id = '" + PRODUCT_INFO + "'";
+            String getsql = "SELECT * FROM product WHERE product_id=:product_info";
+            List<ProductToken> res = CLOTHING_DATA_ACCESS_SERVICE.getProductDetail(getsql, PRODUCT_INFO);
             int res_size = res.size();
 
             // Product id is incorrect
@@ -259,8 +269,9 @@ public class ProcessingInterface {
                 return;
             }
 
-            String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + PRODUCT_INFO + "', " + 0 + ")";
-            CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_ID.executeUpdate(sql);
+            // String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES ('" + USERTOKEN.ID + "', '" + PRODUCT_INFO + "', " + 0 + ")";
+            String sql = "INSERT INTO closet (id, product_id, wear_count) VALUES (:uid, :pid, 0)";
+            CLOTHING_DATA_ACCESS_SERVICE_ON_PRODUCT_ID.executeUpdate(sql, USERTOKEN.ID, PRODUCT_INFO);
         }
     }
 
@@ -271,9 +282,10 @@ public class ProcessingInterface {
 
 
     public List<ProductToken> getWholeCollection(int ID) {
-        // Future impleemtnation idea: call ClothingDataAccessService instead of making it one line
-        String sql = "SELECT * FROM product WHERE product_id = (SELECT product_id FROM closet WHERE id = '" + ID + "')";
-        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetail(sql);
+        // Future implementation idea: call ClothingDataAccessService instead of making it one line
+        // String sql = "SELECT * FROM product WHERE product_id = (SELECT product_id FROM closet WHERE id = '" + ID + "')";
+        String sql = "SELECT * FROM product WHERE product_id = (SELECT product_id FROM closet WHERE id=:id)";
+        List<ProductToken> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetail(sql, ID);
         
         if(res == null) {
             System.out.println(STANDARD_ERROR);
@@ -309,11 +321,18 @@ public class ProcessingInterface {
      * @return
      */
     public List<Object[]> getMostWornProduct(int ID) {
-        String sql = "SELECT *FROM user_data NATURAL JOIN closet WHERE id = '" + ID + "' ORDER BY wear_count DESC LIMIT 1";
+        // String sql = "SELECT *FROM user_data NATURAL JOIN closet WHERE id = '" + ID + "' ORDER BY wear_count DESC LIMIT 1";
+        String sql = "SELECT * FROM user_data NATURAL JOIN closet WHERE id=:id ORDER BY wear_count DESC LIMIT 1";
         
-        List<Object[]> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetailWithWearCount(sql);
+        List<Object[]> res = USER_DATA_ACCESS_SERVICE.getUserOwnedProductDetailWithWearCount(sql, ID);
 
         // Do we need to process res? 
+        /**
+         * Object {
+         *  0: ProductToken
+         *  1: wear count integer
+         * }
+         */
 
         return res;
     }
@@ -327,9 +346,10 @@ public class ProcessingInterface {
 
     public PersonalityToken getPersonality() {
         String in = INPUT.getRobustInput("Enter Personality Type: ");
-        String sql = "SELECT * FROM personality WHERE personality_types = '" + in + "'";
+        // String sql = "SELECT * FROM personality WHERE personality_types = '" + in + "'";
+        String sql = "SELECT * FROM personality WHERE personality_types=:type";
 
-        List<PersonalityToken> res = PERSONALITY_DATA_ACCESS_SERVICE.getPersonality(sql);
+        List<PersonalityToken> res = PERSONALITY_DATA_ACCESS_SERVICE.getPersonality(sql, in);
 
         if(res.size() == 1) {
             return res.get(0);
@@ -350,8 +370,9 @@ public class ProcessingInterface {
     }
 
     public List<PersonalityToken> getPersonalityStrength(String ID) {
-        String sql = "SELECT * FROM user_personality NATURAL JOIN personality WHERE id = '" + ID + "' ORDER BY personality_strength DESC";
-        List<PersonalityToken> res =  PERSONALITY_DATA_ACCESS_SERVICE.getPersonalityStrength(sql);
+        // String sql = "SELECT * FROM user_personality NATURAL JOIN personality WHERE id = '" + ID + "' ORDER BY personality_strength DESC";
+        String sql = "SELECT * FROM user_personality NATURAL JOIN personality WHERE id=:id ORDER BY personality_strength DESC";
+        List<PersonalityToken> res =  PERSONALITY_DATA_ACCESS_SERVICE.getPersonalityStrength(sql, ID);
 
         return res;
     }
@@ -380,16 +401,18 @@ public class ProcessingInterface {
         // Inserting into product
         for(int i = 0; i < product_arr_size; i++) {
             ProductToken temp = product_arr.get(i);
-            String sql = "INSERT INTO product(product_id, manufacturer_name, product_reference_number, product_name, product_description, price_in_dollars, product_length, product_height, product_width, product_style, product_color, product_url) VALUES ('" + temp.PRODUCT_ID + "', '" + temp.MANUFACTURER_NAME + "', '" + temp.PRODUCT_REFERENCE_NUMBER + "', '" + temp.PRODUCT_NAME + "', '" + temp.PRODUCT_DESCRIPTION + "', " + temp.PRICE_IN_DOLLARS + ", '" + temp.PRODUCT_LENGTH + "', '" + temp.PRODUCT_HEIGHT + "', '" + temp.PRODUCT_WIDTH + "', '" + temp.PRODUCT_STYLE + "', '" + temp.PRODUCT_COLOR + "', '" + temp.PRODUCT_URL + "')";
-            product_insertion_count += CLOTHING_DATA_ACCESS_SERVICE.executeUpdate(sql);
+            // String sql = "INSERT INTO product(product_id, manufacturer_name, product_reference_number, product_name, product_description, price_in_dollars, product_length, product_height, product_width, product_style, product_color, product_url) VALUES ('" + temp.PRODUCT_ID + "', '" + temp.MANUFACTURER_NAME + "', '" + temp.PRODUCT_REFERENCE_NUMBER + "', '" + temp.PRODUCT_NAME + "', '" + temp.PRODUCT_DESCRIPTION + "', " + temp.PRICE_IN_DOLLARS + ", '" + temp.PRODUCT_LENGTH + "', '" + temp.PRODUCT_HEIGHT + "', '" + temp.PRODUCT_WIDTH + "', '" + temp.PRODUCT_STYLE + "', '" + temp.PRODUCT_COLOR + "', '" + temp.PRODUCT_URL + "')";
+            String sql = "INSERT INTO product (product_id, manufacturer_name, product_reference_number, product_name, product_description, price_in_dollars, product_length, product_height, product_width, product_style, product_color, product_url) VALUES (:product_id, :manufacturer_name, :product_reference_number, :product_name, :product_description, :price_in_dollars, :product_length, :product_height, :product_width, :product_style, :product_color, :product_url)";
+            product_insertion_count += CLOTHING_DATA_ACCESS_SERVICE.executeUpdate(sql, temp.PRODUCT_ID, temp.MANUFACTURER_NAME, temp.PRODUCT_REFERENCE_NUMBER, temp.PRODUCT_NAME, temp.PRODUCT_DESCRIPTION, temp.PRICE_IN_DOLLARS, temp.PRODUCT_LENGTH, temp.PRODUCT_HEIGHT, temp.PRODUCT_WIDTH, temp.PRODUCT_STYLE, temp.PRODUCT_COLOR, temp.PRODUCT_URL);
 
 
             // Inserting into product image
             int product_image_insertion_count = 0;
             int picture_url_arr_size = temp.PICTURE_URL_ARR.size();
             for(int j = 0; j < picture_url_arr_size; j++) {
-                String sql2 = "INSERT INTO product_image(product_id, product_image) VALUES ('" + temp.PRODUCT_ID + "', '" + temp.PICTURE_URL_ARR.get(j) + "')";
-                product_image_insertion_count += CLOTHING_DATA_ACCESS_SERVICE.executeUpdate(sql2);
+                // String sql2 = "INSERT INTO product_image(product_id, product_image) VALUES ('" + temp.PRODUCT_ID + "', '" + temp.PICTURE_URL_ARR.get(j) + "')";
+                String sql2 = "INSERT INTO product_image (product_id, product_image) VALUES (:product_id, :product_image)";
+                product_image_insertion_count += CLOTHING_DATA_ACCESS_SERVICE.executeUpdate(sql2, temp.PRODUCT_ID, temp.PICTURE_URL_ARR.get(j));
             }
 
             if(product_image_insertion_count == picture_url_arr_size) {

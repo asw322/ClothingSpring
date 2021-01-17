@@ -16,12 +16,17 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 @Component
 public class PersonalityDataAccessService {
     
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private NamedParameterJdbcTemplate namedJdbcTemplate;
 
     public PersonalityDataAccessService() {
         // Empty
@@ -53,8 +58,12 @@ public class PersonalityDataAccessService {
      * @param String
      * @return 
      */
-    public List<PersonalityToken> getPersonality(String sql) {
-        return jdbcTemplate.query(sql, new RowMapper<PersonalityToken>() {
+    public List<PersonalityToken> getPersonality(String sql, String type) {
+        return namedJdbcTemplate.query(
+            sql, 
+            new MapSqlParameterSource()
+                .addValue("type", type),
+            new RowMapper<PersonalityToken>() {
 
             @Override
             public PersonalityToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
@@ -94,8 +103,12 @@ public class PersonalityDataAccessService {
     /**
      * THESE METHODS INTEGRATE BOTH USER_PERSONALITY AND PERSONALITY TO GET USER DATA
      */
-    public List<PersonalityToken> getPersonalityStrength(String sql) {
-        return jdbcTemplate.query(sql, new RowMapper<PersonalityToken>() {
+    public List<PersonalityToken> getPersonalityStrength(String sql, String id) {
+        return namedJdbcTemplate.query(
+            sql, 
+            new MapSqlParameterSource()
+                .addValue("id", id),
+            new RowMapper<PersonalityToken>() {
 
             @Override
             public PersonalityToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
