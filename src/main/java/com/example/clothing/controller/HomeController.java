@@ -1,6 +1,6 @@
 /**
  * https://www.youtube.com/watch?v=35EQXmHKZYs&t=3360s
- * 1:33:51
+ * 1:44:00
  * 
  */
 
@@ -21,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController extends ControllerAbstract {
 
+    private int INVALID_LOGIN_ATTEMPTS = 0;
+
     @RequestMapping("/home")
     // @ResponseBody
     // HttpServletRequest is a request disbatcher
@@ -39,9 +41,8 @@ public class HomeController extends ControllerAbstract {
         return mv;
     }
 
-    @RequestMapping("/addUser")
+    @RequestMapping("/home/addUser")
     public ModelAndView addUser(@RequestParam("name") String name, @RequestParam("password") String password) {
-        System.out.println("adding a user in home controller");
         UserToken user = new UserToken();
         user.setLogin(name, password, super.PROCESSING_INTERFACE.generateNewID());
         System.out.println(user.USERNAME);
@@ -50,8 +51,29 @@ public class HomeController extends ControllerAbstract {
         // Creates a user 
         super.PROCESSING_INTERFACE.createAccount(user);
 
-        ModelAndView mv = new ModelAndView();
+        ModelAndView mv = new ModelAndView("home");
         return mv;
     }
+
+    // @RequestMapping("/login")
+    // public ModelAndView login(@RequestParam("name") String name, @RequestParam("password") String password) {
+    //     UserToken user = super.ACCESS_CONTROL.login(name, password);
+    //     ModelAndView mv = new ModelAndView("successfulLogin");
+
+    //     if(user == null) {
+    //         // Prompt user to login again 
+    //         this.INVALID_LOGIN_ATTEMPTS++;
+
+    //         if(this.INVALID_LOGIN_ATTEMPTS == 4) {
+    //             // Lock the user account
+    //         }
+    //     }
+    //     else {
+    //         // Login successful
+    //         mv.addObject("user",user);
+    //     }
+        
+    //     return mv;
+    // }
 }
 

@@ -86,7 +86,7 @@ public class UserDataAccessService {
             @Override
             public UserToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
                 UserToken temp = new UserToken();
-                temp.setLogin(rs.getString("name"), rs.getString("hashedpassword"), rs.getInt("id"));
+                temp.setLogin(rs.getString("username"), rs.getString("hashedpassword"), rs.getInt("id"));
                 return temp;
             }
         });
@@ -96,14 +96,14 @@ public class UserDataAccessService {
         return namedJdbcTemplate.query(
             sql,
             new MapSqlParameterSource()
-                .addValue("name", name)
+                .addValue("username", name)
                 .addValue("hashedpassword", hashedpassword),
             new RowMapper<UserToken>() {
 
                 @Override
                 public UserToken mapRow(ResultSet rs, int rowNumber) throws SQLException {
                     UserToken temp = new UserToken();
-                    temp.setLogin(rs.getString("name"), rs.getString("hashedpassword"), rs.getInt("id"));
+                    temp.setLogin(rs.getString("username"), rs.getString("hashedpassword"), rs.getInt("id"));
                     return temp;
                 }
             }

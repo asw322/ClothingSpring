@@ -14,11 +14,18 @@
         ${id}
 
         <!-- Adding a form for users to sign in -->
-        <form action="addUser">
+        <form action="/home/addUser">
             <input type="text" name="name"><br>
             <input type="text" name="password"><br>
             <input type="submit"><br>
         </form>
+
+
+        <!-- <form action="login">
+            <input type="text" name="name"><br>
+            <input type="text" name="password"><br>
+            <input type="submit"><br>
+        </form> -->
     </body>
 </html>
 

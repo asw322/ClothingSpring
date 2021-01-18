@@ -82,6 +82,24 @@ public class AccessControl {
         return USERTOKEN;
     }
 
+    public UserToken login(String username, String password) {
+        System.out.println("Sign in");
+        USERNAME = username;
+        PASSWORD = password;
+        HASHEDPASSWORD = ENCRYPT.getHash(PASSWORD);
+        System.out.println("Output hash = " + HASHEDPASSWORD);
+        PASSWORD = "";
+        if(HASHEDPASSWORD.equals("null")) {
+            return null;
+        }
+        USERTOKEN = PROCESSING_INTERFACE.userLogin(USERNAME, HASHEDPASSWORD);
+        if(USERTOKEN == null) {
+            System.out.println("Login failed");
+            return null;
+        }
+        return USERTOKEN;
+    }
+
     // CREATING NEW ACCOUNT
     public UserToken createAccount() {
         System.out.println("Creating New Account");

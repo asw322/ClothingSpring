@@ -74,7 +74,7 @@ public class ProcessingInterface {
      * @return
      */
     public UserToken userLogin(String USERNAME, String HASHEDPASSWORD) {
-        String sql = "SELECT * FROM person WHERE name=:name AND hashedpassword=:hashedpassword";
+        String sql = "SELECT * FROM user_data WHERE username=:username AND hashedpassword=:hashedpassword";
         List<UserToken> res = USER_DATA_ACCESS_SERVICE.getUserData(sql, USERNAME, HASHEDPASSWORD);
 
         // Check to make sure list only contains 1 account 
