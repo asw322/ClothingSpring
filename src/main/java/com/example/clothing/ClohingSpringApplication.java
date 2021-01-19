@@ -22,7 +22,7 @@ public class ClohingSpringApplication {
 	@Autowired
 	private static Input INPUT;
 
-	private static void processor() {
+	private static void terminalApp() {
 		// Instantiate Scanner
 		INPUT = CONTEXT.getBean(Input.class);
 
@@ -77,7 +77,7 @@ public class ClohingSpringApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ClohingSpringApplication.class, args);		
 
-		processor();
+		// terminalApp();
 		// insertHM();
 	}
 }

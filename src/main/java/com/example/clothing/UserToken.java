@@ -12,6 +12,14 @@ public class UserToken {
     public String SEX;
     public int ID;
 
+    public UserToken() {
+        // Empty
+    }
+    // Test constructor for front end
+    public UserToken(int _ID) {
+        ID = _ID;
+    }
+
     /**
      * 
      * @param _USERNAME
