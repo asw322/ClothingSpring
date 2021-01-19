@@ -50,12 +50,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Database migration -->
-		<!-- <dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
-		</dependency> -->
-
 		<!-- OkHttp network access -->
 		<dependency>
 			<groupId>com.squareup.okhttp</groupId>
@@ -81,6 +75,13 @@
 			<groupId>org.apache.tomcat</groupId>
 			<artifactId>tomcat-jasper</artifactId>
 			<version>9.0.22</version>
+		</dependency>
+
+		<!-- Thyme Leaf -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+			<!-- <version></version> -->
 		</dependency>
 
 	</dependencies>
