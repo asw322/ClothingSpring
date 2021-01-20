@@ -19,6 +19,8 @@
             <button type="button" class="btn btn-primary mt-3" @click="login">Log In</button>
             <div class="post-form-error" v-if="formError">{{formError}}, please fill in the username and password</div>
             <div>{{ this.responseID }}</div>
+            <div>{{ this.responseUsername }}</div>
+            <div>{{ this.responseHashedpassword }}</div>
         </div>
     </div>
 </template>
@@ -31,32 +33,57 @@ export default class IndexPage extends Vue {
     // Life cycle hook: created() fetch data from cookie if exists and automatically log user in
 
     private formUsername: string = '';
-    private formPassword: string = '';
+    private formPassword: string = '435600oo';
+    private formName: string = '';
+    private formBirthdate: string = '';
+    private formSex: string = '';
+    private formID: number = 0;
+
     private formError: string = '';
 
     private responseID: number = 0;
+    private responseUsername: string = '';
+    private responseHashedpassword: string = '';
 
     public login(): void {
         console.log("Logging the user in");
         
         // Web version of a UserToken
         const newLoginRequest = {
-            username: this.formUsername,
-            password: this.formPassword
+            USERNAME: this.formUsername,
+            PASSWORD: this.formPassword,
+            NAME: this.formName,
+            BIRTHDATE: this.formBirthdate,
+            SEX: this.formSex,
+            ID: this.formID 
         }
 
-        console.log(newLoginRequest);
+        console.log("password" + newLoginRequest.PASSWORD)
 
-        UsersDataService.login(newLoginRequest)
+        // Logging user in based no USERNAME and PASSWORD
+        // UsersDataService.login(newLoginRequest)
+        //     .then(response => {
+        //         // bring the user into their profile page
+        //         console.log(response);
+        //         this.responseID = response.data.ID;
+        //         this.responseUsername = response.data.USERNAME;
+        //         this.responseHashedpassword = response.data.HASHEDPASSWORD;
+        //     })
+        //     .catch(err => {
+        //         this.formError = err.response.statusText;
+        //     });
+
+        UsersDataService.loginParameters(newLoginRequest.USERNAME, newLoginRequest.PASSWORD)
             .then(response => {
                 // bring the user into their profile page
                 console.log(response);
                 this.responseID = response.data.ID;
-
+                this.responseUsername = response.data.USERNAME;
+                this.responseHashedpassword = response.data.HASHEDPASSWORD;
             })
             .catch(err => {
                 this.formError = err.response.statusText;
-            })
+            });
     }
 
     
