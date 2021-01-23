@@ -13,10 +13,13 @@
             <!-- <router-link class="list-group-item list-group-item-action" to="/sprint3">Sprint 3</router-link> -->
         </div>
 
+        <facebookLoginComponent />
+
         <!-- Login area -->
         <div>
             <textarea class="form-control" v-model="formUsername" @keyup="formError= ''"></textarea>
             <button type="button" class="btn btn-primary mt-3" @click="login">Log In</button>
+            <button type="button" class="btn btn-primary mt-3" @click="register">Sign Up</button>
             <div class="post-form-error" v-if="formError">{{formError}}, please fill in the username and password</div>
             <div>{{ this.responseID }}</div>
             <div>{{ this.responseUsername }}</div>
@@ -27,8 +30,14 @@
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator';
 import UsersDataService from '../services/UsersDataService';
+import router from '../router/router';
+import FacebookLoginComponent from '../components/FacebookLogin.vue';
 
-@Component
+@Component({
+    components: {
+        FacebookLoginComponent
+    }
+})
 export default class IndexPage extends Vue {
     // Life cycle hook: created() fetch data from cookie if exists and automatically log user in
 
@@ -61,29 +70,34 @@ export default class IndexPage extends Vue {
         console.log("password" + newLoginRequest.PASSWORD)
 
         // Logging user in based no USERNAME and PASSWORD
-        // UsersDataService.login(newLoginRequest)
-        //     .then(response => {
-        //         // bring the user into their profile page
-        //         console.log(response);
-        //         this.responseID = response.data.ID;
-        //         this.responseUsername = response.data.USERNAME;
-        //         this.responseHashedpassword = response.data.HASHEDPASSWORD;
-        //     })
-        //     .catch(err => {
-        //         this.formError = err.response.statusText;
-        //     });
-
-        UsersDataService.loginParameters(newLoginRequest.USERNAME, newLoginRequest.PASSWORD)
+        UsersDataService.login(newLoginRequest.USERNAME, newLoginRequest.PASSWORD)
             .then(response => {
-                // bring the user into their profile page
-                console.log(response);
+                
+                // console.log(response);
                 this.responseID = response.data.ID;
                 this.responseUsername = response.data.USERNAME;
                 this.responseHashedpassword = response.data.HASHEDPASSWORD;
+
+                console.log(response);
+
+                // store the user info into a cookie
+                this.$cookies.set("id", response.data.ID);
+                this.$cookies.set("birthdate", response.data.BIRTHDATE);
+                this.$cookies.set("username", response.data.USERNAME);      // This data is not 100% good to store in cookie
+
+                // bring the user into their profile page
+                this.$router.push('/user');
             })
             .catch(err => {
                 this.formError = err.response.statusText;
             });
+    }
+
+
+    public register(): void {
+        console.log("Registering new user");
+
+        this.$router.push('/register');
     }
 
     

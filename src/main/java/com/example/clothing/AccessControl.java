@@ -84,7 +84,7 @@ public class AccessControl {
 
     public UserToken login(String username, String password) {
         System.out.println("Sign in");
-        USERNAME = username;
+        USERNAME = username.trim();
         PASSWORD = password;
         HASHEDPASSWORD = ENCRYPT.getHash(PASSWORD);
         System.out.println("Output hash = " + HASHEDPASSWORD);

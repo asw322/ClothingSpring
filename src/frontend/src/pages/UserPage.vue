@@ -7,7 +7,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component
-export default class Sprint1Page extends Vue {
+export default class UserPage extends Vue {
     private title: string = 'This is info from Sprint 1 page';
 }
 

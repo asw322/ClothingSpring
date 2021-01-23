@@ -13,13 +13,8 @@ export interface AxiosResponse<T> {
   }
 
 class UsersDataService {
-    // Login based on the user input object
-    login(data: any) {
-        return axios.get(`${CLOTHING_API_URL}`, data)
-        // return axios.get(`${CLOTHING_API_URL}`)
-    }
-
-    loginParameters(username: string, password: string) {
+    // Login based on the user input
+    login(username: string, password: string) {
         return axios.get(`${CLOTHING_API_URL}`, {
             params: {
                 username, 

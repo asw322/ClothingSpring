@@ -12,9 +12,14 @@ const routes: Array<RouteConfig> = [
         component: () => import('../pages/IndexPage.vue')
     },
     {
-        path: '/sprint1',
-        name: 'sprint-1',
-        component: () => import('../pages/Sprint1Page.vue')
+        path: '/user',
+        name: 'user',
+        component: () => import('../pages/UserPage.vue')
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: () => import('../pages/SignUpPage.vue')
     }
 ];
 

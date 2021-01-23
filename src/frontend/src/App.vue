@@ -19,7 +19,7 @@
             <router-link class="nav-link" to="/sprint0" exact>Sprint 0</router-link>
           </li> -->
           <li class="nav-item">
-            <router-link class="nav-link" to="/sprint1" exact>Sprint 1</router-link>
+            <router-link class="nav-link" to="/user" exact>User page</router-link>
           </li>
           <!-- <li class="nav-item">
             <router-link class="nav-link" to="/sprint2" exact>Sprint 2</router-link>
